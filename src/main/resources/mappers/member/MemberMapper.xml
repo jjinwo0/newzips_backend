@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.mapper.MemberMapper">
+
+    <resultMap id="member" type="com.ssafy.happyhouse.entity.Member">
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="role" property="role"/>
+    </resultMap>
+
+    <select id="findAll" resultType="member">
+		<![CDATA[
+        SELECT *
+        FROM SSAFYHOME.MEMBERS
+        ]]>
+    </select>
+
+    <select id="findById" parameterType="long" resultType="member">
+		<![CDATA[
+        SELECT *
+        FROM SSAFYHOME.MEMBERS
+        WHERE id=#{id}
+        ]]>
+    </select>
+
+    <select id="findByUsernameAndPassword" parameterType="map" resultType="member">
+		<![CDATA[
+        SELECT *
+        FROM SSAFYHOME.MEMBERS
+        WHERE username=#{username}
+          AND password=#{password}
+        ]]>
+	</select>
+
+    <insert id="join" parameterType="member">
+		<![CDATA[
+        INSERT INTO SSAFYHOME.MEMBERS (username, email, password, role)
+        VALUES (#{username}, #{email}, #{password}, #{role, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.RoleTypeHandler})
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="map">
+		<![CDATA[
+        UPDATE SSAFYHOME.MEMBERS
+        set username=#{username}, password=#{password}, email=#{email}
+        where id=#{id}
+        ]]>
+    </update>
+
+    <delete id="delete" parameterType="long">
+		<![CDATA[
+        delete from SSAFYHOME.MEMBERS
+        where id=#{id}
+        ]]>
+    </delete>
+</mapper>
