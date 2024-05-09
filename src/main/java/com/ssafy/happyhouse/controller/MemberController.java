@@ -1,7 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
 import com.ssafy.happyhouse.dto.member.MemberDTO;
-import com.ssafy.happyhouse.entity.Member;
+import com.ssafy.happyhouse.entity.member.Member;
 import com.ssafy.happyhouse.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

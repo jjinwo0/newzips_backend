@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.global.handler;
 
-import com.ssafy.happyhouse.entity.constant.Role;
+import com.ssafy.happyhouse.entity.member.constant.Role;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 import org.apache.ibatis.type.TypeHandler;

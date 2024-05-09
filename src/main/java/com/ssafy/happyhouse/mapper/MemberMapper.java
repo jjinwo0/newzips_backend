@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.mapper;
 
-import com.ssafy.happyhouse.entity.Member;
+import com.ssafy.happyhouse.entity.member.Member;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.mapper.HouseMapper">
+
+    <select id="getHouseListByCode" parameterType="string" resultType="HouseDeal">
+        SELECT a.aptCode,
+               a.apartmentName,
+               REPLACE(b.dealAmount, ',', '') as dealAmount,
+               a.buildYear, DATE(CONCAT(b.dealYear, '-',
+            LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
+            a.roadName,
+            a.dongCode,
+            b.area as exclusiveArea, a.jibun, b.floor
+        FROM houseinfo a JOIN housedeal b
+        ON a.aptCode = b.aptCode
+        WHERE a.dongCode = #{dongCode}
+        ORDER BY dealDate DESC;
+    </select>
+
+    <select id="getHouseListByName" parameterType="string" resultType="HouseDeal">
+        SELECT a.aptCode,
+               a.apartmentName,
+               REPLACE(b.dealAmount, ',', '') as dealAmount,
+               a.buildYear, DATE(CONCAT(b.dealYear, '-',
+            LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
+            a.roadName,
+            a.dongCode,
+            b.area as exclusiveArea, a.jibun, b.floor
+        FROM houseinfo a JOIN housedeal b
+        ON a.aptCode = b.aptCode
+        WHERE a.apartmentName LIKE CONCAT('%', #{apartmentName}, '%')
+        ORDER BY dealDate DESC;
+    </select>
+
+    <select id="getHouseDetailByAptCode" parameterType="long" resultType="HouseDeal">
+        SELECT a.aptCode,
+               a.apartmentName,
+               REPLACE(b.dealAmount, ',', '') as dealAmount,
+               a.buildYear, DATE(CONCAT(b.dealYear, '-',
+            LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
+            a.roadName,
+            a.dongCode,
+            b.area as exclusiveArea, a.jibun, b.floor
+        FROM houseinfo a JOIN housedeal b
+        ON a.aptCode = b.aptCode
+        WHERE a.aptCode = #{aptCode}
+        ORDER BY dealDate DESC;
+    </select>
+
+</mapper>

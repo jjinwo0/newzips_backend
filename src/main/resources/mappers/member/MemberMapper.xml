@@ -3,7 +3,7 @@
 
 <mapper namespace="com.ssafy.happyhouse.mapper.MemberMapper">
 
-    <resultMap id="member" type="com.ssafy.happyhouse.entity.Member">
+    <resultMap id="member" type="com.ssafy.happyhouse.entity.member.Member">
         <result column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="email" property="email"/>

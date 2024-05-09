@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.service;
 
-import com.ssafy.happyhouse.entity.Member;
+import com.ssafy.happyhouse.entity.member.Member;
 import com.ssafy.happyhouse.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

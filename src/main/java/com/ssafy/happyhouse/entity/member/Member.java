@@ -1,6 +1,6 @@
-package com.ssafy.happyhouse.entity;
+package com.ssafy.happyhouse.entity.member;
 
-import com.ssafy.happyhouse.entity.constant.Role;
+import com.ssafy.happyhouse.entity.member.constant.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

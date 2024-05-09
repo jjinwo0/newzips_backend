@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.global.interceptor;
 
-import com.ssafy.happyhouse.entity.Member;
+import com.ssafy.happyhouse.entity.member.Member;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

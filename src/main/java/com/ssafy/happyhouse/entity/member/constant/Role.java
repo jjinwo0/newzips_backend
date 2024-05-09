@@ -1,4 +1,4 @@
-package com.ssafy.happyhouse.entity.constant;
+package com.ssafy.happyhouse.entity.member.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
