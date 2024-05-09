@@ -1,6 +1,6 @@
-package com.ssafy.happyhouse.controller;
+package com.ssafy.happyhouse.controller.member;
 
-import com.ssafy.happyhouse.dto.member.MemberDTO;
+import com.ssafy.happyhouse.dto.member.MemberDto;
 import com.ssafy.happyhouse.entity.member.Member;
 import com.ssafy.happyhouse.service.MemberService;
 import jakarta.servlet.http.Cookie;
@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginMember(@RequestBody MemberDTO.Request dto,
+    public ResponseEntity<?> loginMember(@RequestBody MemberDto.Request dto,
                                          HttpServletRequest request,
                                          HttpServletResponse response) {
 
@@ -58,5 +59,21 @@ public class MemberController {
         response.addCookie(cookie);
 
         return ResponseEntity.ok("Logout Success");
+    }
+
+    @PostMapping("/join")
+    public ResponseEntity<?> join(MemberDto.Join dto){
+
+        memberService.join(dto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<?> update(@RequestBody MemberDto.Update dto){
+
+        memberService.updateMember(dto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

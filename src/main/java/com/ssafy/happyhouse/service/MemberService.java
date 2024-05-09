@@ -1,12 +1,15 @@
 package com.ssafy.happyhouse.service;
 
+import com.ssafy.happyhouse.dto.member.MemberDto;
 import com.ssafy.happyhouse.entity.member.Member;
+import com.ssafy.happyhouse.entity.member.constant.Role;
 import com.ssafy.happyhouse.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -15,6 +18,11 @@ import java.util.Map;
 public class MemberService {
 
     private final MemberMapper memberMapper;
+
+    public List<Member> findAll() {
+
+        return memberMapper.findAll();
+    }
 
     public Member findByUsernameAndPassword(String username, String password){
 
@@ -39,5 +47,36 @@ public class MemberService {
             throw new RuntimeException("Not Found Member");
 
         return findMember;
+    }
+
+    @Transactional
+    public void join(MemberDto.Join dto){
+
+        Member joinMember = Member.builder()
+                .username(dto.getUsername())
+                .email(dto.getEmail())
+                .password(dto.getPassword())
+                .role(Role.USER)
+                .build();
+
+        memberMapper.join(joinMember);
+    }
+
+    @Transactional
+    public void updateMember(MemberDto.Update dto){
+
+        Map<String, Object> updateMap = new HashMap<>();
+
+        updateMap.put("username", dto.getUsername());
+        updateMap.put("password", dto.getPassword());
+        updateMap.put("email", dto.getEmail());
+
+        memberMapper.update(updateMap);
+    }
+
+    @Transactional
+    public void deleteMember(Long id){
+
+        memberMapper.delete(id);
     }
 }
