@@ -45,7 +45,7 @@ public class MemberController {
         return ResponseEntity.ok(findMember);
     }
 
-    @PostMapping("/logout/{id}")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request,
                                     HttpServletResponse response) {
 
