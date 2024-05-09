@@ -45,11 +45,8 @@ public class MemberController {
     }
 
     @PostMapping("/logout/{id}")
-    public ResponseEntity<?> logout(@PathVariable("id") Long id,
-                                    HttpServletRequest request,
+    public ResponseEntity<?> logout(HttpServletRequest request,
                                     HttpServletResponse response) {
-
-        Member findMember = memberService.findById(id);
 
         HttpSession session = request.getSession(false);
 
