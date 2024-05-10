@@ -1,51 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.happyhouse.mapper.HouseMapper">
+<mapper namespace="com.house.mapper.house.HouseMapper">
 
-    <select id="getHouseListByCode" parameterType="string" resultType="HouseDeal">
+    <select id="getHouseList" parameterType="map" resultType="HouseDeal">
+        -- getHouseList 동 주소를 활용해 매물 리스트를 조회한다.
         SELECT a.aptCode,
                a.apartmentName,
                REPLACE(b.dealAmount, ',', '') as dealAmount,
-               a.buildYear, DATE(CONCAT(b.dealYear, '-',
-            LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
+               a.buildYear,
+            DATE(CONCAT(b.dealYear, '-', LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
             a.roadName,
             a.dongCode,
-            b.area as exclusiveArea, a.jibun, b.floor
+            ( b.area DIV 3.3057 ) as exclusiveArea,
+            a.jibun,
+            b.floor
         FROM houseinfo a JOIN housedeal b
         ON a.aptCode = b.aptCode
-        WHERE a.dongCode = #{dongCode}
-        ORDER BY dealDate DESC;
+        WHERE a.dongCode = #{dong}
+        ORDER BY dealDate DESC
     </select>
 
-    <select id="getHouseListByName" parameterType="string" resultType="HouseDeal">
+    <select id="getHouseListByName" parameterType="string" resultType="map">
+        -- getHouseListByName 아파트명을 활용해 아파트 리스트를 조회한다.
         SELECT a.aptCode,
                a.apartmentName,
-               REPLACE(b.dealAmount, ',', '') as dealAmount,
-               a.buildYear, DATE(CONCAT(b.dealYear, '-',
-            LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
-            a.roadName,
-            a.dongCode,
-            b.area as exclusiveArea, a.jibun, b.floor
-        FROM houseinfo a JOIN housedeal b
-        ON a.aptCode = b.aptCode
-        WHERE a.apartmentName LIKE CONCAT('%', #{apartmentName}, '%')
-        ORDER BY dealDate DESC;
+               CONCAT(b.dongName, ' ', a.jibun) jibunjuso,
+               CONCAT(b.sidoName, ' ', b.gugunName, ' ', b.dongName, ' ', a.roadName) dorojuso
+        FROM houseinfo a join dongcode b on a.dongCode = b.dongCode
+        WHERE MATCH(a.apartmentName) AGAINST('+${apartmentName}*' IN BOOLEAN MODE)
     </select>
 
-    <select id="getHouseDetailByAptCode" parameterType="long" resultType="HouseDeal">
+    <select id="getHouseListByLatLng" parameterType="map" resultType="HouseDeal">
+        <![CDATA[
         SELECT a.aptCode,
                a.apartmentName,
                REPLACE(b.dealAmount, ',', '') as dealAmount,
-               a.buildYear, DATE(CONCAT(b.dealYear, '-',
-            LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
+               a.buildYear,
+            DATE(CONCAT(b.dealYear, '-', LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
             a.roadName,
             a.dongCode,
-            b.area as exclusiveArea, a.jibun, b.floor
-        FROM houseinfo a JOIN housedeal b
-        ON a.aptCode = b.aptCode
-        WHERE a.aptCode = #{aptCode}
-        ORDER BY dealDate DESC;
+            b.area as exclusiveArea,
+            a.jibun,
+            b.floor
+        FROM houseinfo a
+            JOIN housedeal b ON a.aptCode = b.aptCode
+        WHERE ST_DISTANCE_SPHERE(
+            POINT(lng, lat),
+            POINT(#{lon}, #{lat})
+            ) <= 100
+        ORDER BY dealDate DESC
+        ]]>
+    </select>
+
+    <select id="getHouseDetailByAptCode" parameterType="long" resultType="map">
+        -- getHouseDetailByAptCode 아파트 코드를 활용해 아파트 상세 정보를 조회한다.
+        SELECT a.aptCode,
+               a.apartmentName,
+               a.buildYear,
+               a.lng,
+               a.lat,
+               hd.dealAmount,
+               hd.dealYear,
+               hd.dealMonth,
+               hd.dealDay,
+               hd.floor,
+               CONCAT(b.dongName, ' ', a.jibun) jibunjuso,
+               CONCAT(b.sidoName, ' ', b.gugunName, ' ', b.dongName, ' ', a.roadName) dorojuso,
+               REPLACE(hd.dealAmount, ',', '') AS dealAmount,
+            DATE(CONCAT(hd.dealYear, '-',LPAD(hd.dealMonth, 2, '0'), '-', hd.dealDay)) AS dealDate,
+            ( hd.area DIV 3.3057 ) AS exclusiveArea
+        FROM houseinfo a
+            JOIN dongcode b
+        ON a.dongCode = b.dongCode
+            JOIN housedeal hd
+            ON a.aptCode = hd.aptCode
+        WHERE a.aptcode = #{aptCode}
+        ORDER BY dealDate desc limit 6
     </select>
 
 </mapper>
