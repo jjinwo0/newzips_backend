@@ -56,4 +56,12 @@
         where id=#{id}
         ]]>
     </delete>
+
+    <select id="findByUsername" parameterType="string" resultType="member">
+		<![CDATA[
+        SELECT *
+        FROM SSAFYHOME.MEMBERS
+        WHERE username=#{username}
+        ]]>
+    </select>
 </mapper>

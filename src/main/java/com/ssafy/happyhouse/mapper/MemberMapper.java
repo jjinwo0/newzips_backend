@@ -20,5 +20,7 @@ public interface MemberMapper {
     void update(Map<String, Object> map);
 
     void delete(Long id);
+
+    List<Member> findByUsername(String username);
 }
 

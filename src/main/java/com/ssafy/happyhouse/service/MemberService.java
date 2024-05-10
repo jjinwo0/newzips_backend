@@ -79,4 +79,14 @@ public class MemberService {
 
         memberMapper.delete(id);
     }
+
+    public Boolean findByUsername(String username){
+
+        List<Member> findList = memberMapper.findByUsername(username);
+
+        if (findList.isEmpty())
+            return true;
+
+        return false;
+    }
 }

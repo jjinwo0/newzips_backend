@@ -76,4 +76,15 @@ public class MemberController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/valid/{username}")
+    public ResponseEntity<?> validUsername(@PathVariable String username){
+
+        Boolean valid = memberService.findByUsername(username);
+
+        if (valid)
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }
