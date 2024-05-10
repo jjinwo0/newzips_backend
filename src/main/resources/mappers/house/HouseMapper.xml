@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.house.mapper.house.HouseMapper">
+<mapper namespace="com.ssafy.happyhouse.mapper.HouseMapper">
 
-    <select id="getHouseList" parameterType="map" resultType="HouseDeal">
+    <select id="getHouseList" parameterType="string" resultType="HouseDeal">
         -- getHouseList 동 주소를 활용해 매물 리스트를 조회한다.
         SELECT a.aptCode,
                a.apartmentName,
@@ -17,7 +17,7 @@
             b.floor
         FROM houseinfo a JOIN housedeal b
         ON a.aptCode = b.aptCode
-        WHERE a.dongCode = #{dong}
+        WHERE a.dongCode = #{dongCode}
         ORDER BY dealDate DESC
     </select>
 

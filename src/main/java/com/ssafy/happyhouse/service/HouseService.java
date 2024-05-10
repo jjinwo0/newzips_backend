@@ -35,9 +35,9 @@ public class HouseService {
         return findHouseList;
     }
 
-    public HouseDeal findHouseDealByAptCode(Long aptCode){
+    public List<HouseDeal> findHouseDealByAptCode(Long aptCode){
 
-        HouseDeal findHouseDeal = houseMapper.getHouseDetailByAptCode(aptCode);
+        List<HouseDeal> findHouseDeal = houseMapper.getHouseDetailByAptCode(aptCode);
 
         if (findHouseDeal == null)
             throw new RuntimeException("Not Found List");

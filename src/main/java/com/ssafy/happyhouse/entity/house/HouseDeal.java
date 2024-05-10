@@ -4,19 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
 
-@Getter
+@Getter @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class HouseDeal {
 
     @NotNull
     private Long aptCode;
 
-    private Long dealAmount;
+    private String dealAmount;
 
     private Integer buildYear;
+
+    private String dealYear;
+
+    private String dealMonth;
+
+    private String dealDay;
 
     private String dealDate;
 
@@ -33,4 +39,3 @@ public class HouseDeal {
     private Integer floor;
 
 }
-

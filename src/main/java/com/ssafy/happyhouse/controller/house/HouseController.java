@@ -27,9 +27,9 @@ public class HouseController {
     }
 
     @GetMapping("/detail/{code}")
-    public ResponseEntity<HouseDeal> findDetail(@PathVariable("code") Long aptCode){
+    public ResponseEntity<?> findDetail(@PathVariable("code") Long aptCode){
 
-        HouseDeal findDetail = houseService.findHouseDealByAptCode(aptCode);
+        List<HouseDeal> findDetail = houseService.findHouseDealByAptCode(aptCode);
 
         return ResponseEntity.ok(findDetail);
     }
