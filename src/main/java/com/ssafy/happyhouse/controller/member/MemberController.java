@@ -49,10 +49,6 @@ public class MemberController {
     public ResponseEntity<?> logout(HttpServletRequest request,
                                     HttpServletResponse response) {
 
-        HttpSession session = request.getSession(false);
-
-        session.invalidate();
-
         Cookie cookie = new Cookie("loginMember", null);
         cookie.setPath("/");
         cookie.setMaxAge(0); // 쿠키의 만료 시간을 0으로 설정하여 삭제한다.
