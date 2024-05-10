@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class HouseController {
         List<HouseDeal> findList = houseService.findHouseDealByDongCode(dongCode);
 
         if (findList.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok(Collections.emptyList());
 
         return ResponseEntity.ok(findList);
     }
@@ -47,7 +48,7 @@ public class HouseController {
         List<HouseDeal> findList = houseService.findHouseDealByName(apartName);
 
         if (findList.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok(Collections.emptyList());
 
         return ResponseEntity.ok(findList);
     }

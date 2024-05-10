@@ -19,9 +19,6 @@ public class HouseService {
 
         List<HouseDeal> findHouseList = houseMapper.getHouseListByName(apartName);
 
-        if (findHouseList.isEmpty())
-            throw new RuntimeException("Not Found List");
-
         return findHouseList;
     }
 
@@ -29,18 +26,12 @@ public class HouseService {
 
         List<HouseDeal> findHouseList = houseMapper.getHouseList(dongCode);
 
-        if (findHouseList.isEmpty())
-            throw new RuntimeException("Not Found List");
-
         return findHouseList;
     }
 
     public List<HouseDeal> findHouseDealByAptCode(Long aptCode){
 
         List<HouseDeal> findHouseDeal = houseMapper.getHouseDetailByAptCode(aptCode);
-
-        if (findHouseDeal == null)
-            throw new RuntimeException("Not Found List");
 
         return findHouseDeal;
     }
