@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.mapper.BoardMapper">
+
+    <insert id="writeBoard" parameterType="map">
+        <![CDATA[
+        INSERT INTO SSAFYHOME.BOARD(title, content, author)
+        VALUES(#{title}, #{content}, #{author})
+        ]]>
+    </insert>
+
+    <select id="findAll" resultType="board">
+        <![CDATA[
+        SELECT * FROM SSAFYHOME.BOARD
+        ]]>
+    </select>
+
+    <select id="findById" parameterType="long" resultType="board">
+        <![CDATA[
+        SELECT * FROM SSAFYHOME.BOARD
+        WHERE id=#{id}
+        ]]>
+    </select>
+
+    <update id="updateBoard" parameterType="map">
+        <![CDATA[
+        UPDATE SSAFYHOME.BOARD
+        SET title=#{title}, content=#{content}
+        WHERE id=#{id}
+        ]]>
+    </update>
+
+    <delete id="deleteBoard" parameterType="long">
+        <![CDATA[
+        DELETE FROM SSAFYHOME.BOARD
+        WHERE id=#{id}
+        ]]>
+    </delete>
+
+</mapper>
