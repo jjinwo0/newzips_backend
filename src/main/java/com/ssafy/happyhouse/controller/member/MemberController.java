@@ -62,7 +62,7 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(MemberDto.Join dto){
+    public ResponseEntity<?> join(@RequestBody MemberDto.Join dto){
 
         memberService.join(dto);
 
