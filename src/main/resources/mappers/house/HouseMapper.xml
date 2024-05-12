@@ -9,16 +9,16 @@
                a.apartmentName,
                REPLACE(b.dealAmount, ',', '') as dealAmount,
                a.buildYear,
-            DATE(CONCAT(b.dealYear, '-', LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
-            a.roadName,
-            a.dongCode,
-            ( b.area DIV 3.3057 ) as exclusiveArea,
-            a.jibun,
-            b.floor
-        FROM houseinfo a JOIN housedeal b
-        ON a.aptCode = b.aptCode
-        WHERE a.dongCode = #{dongCode}
-        ORDER BY dealDate DESC
+               DATE(CONCAT(b.dealYear, '-', LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
+               a.roadName,
+               a.dongCode,
+               ( b.area DIV 3.3057 ) as exclusiveArea,
+               a.jibun,
+               b.floor
+          FROM houseinfo a JOIN housedeal b
+            ON a.aptCode = b.aptCode
+         WHERE a.dongCode = #{dongCode}
+         ORDER BY dealDate DESC
     </select>
 
     <select id="getHouseListByName" parameterType="string" resultType="map">
@@ -27,8 +27,8 @@
                a.apartmentName,
                CONCAT(b.dongName, ' ', a.jibun) jibunjuso,
                CONCAT(b.sidoName, ' ', b.gugunName, ' ', b.dongName, ' ', a.roadName) dorojuso
-        FROM houseinfo a join dongcode b on a.dongCode = b.dongCode
-        WHERE MATCH(a.apartmentName) AGAINST('+${apartmentName}*' IN BOOLEAN MODE)
+          FROM houseinfo a join dongcode b on a.dongCode = b.dongCode
+         WHERE MATCH(a.apartmentName) AGAINST('+${apartmentName}*' IN BOOLEAN MODE)
     </select>
 
     <select id="getHouseListByLatLng" parameterType="map" resultType="HouseDeal">
@@ -37,19 +37,19 @@
                a.apartmentName,
                REPLACE(b.dealAmount, ',', '') as dealAmount,
                a.buildYear,
-            DATE(CONCAT(b.dealYear, '-', LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
-            a.roadName,
-            a.dongCode,
-            b.area as exclusiveArea,
-            a.jibun,
-            b.floor
-        FROM houseinfo a
-            JOIN housedeal b ON a.aptCode = b.aptCode
-        WHERE ST_DISTANCE_SPHERE(
-            POINT(lng, lat),
-            POINT(#{lon}, #{lat})
-            ) <= 100
-        ORDER BY dealDate DESC
+               DATE(CONCAT(b.dealYear, '-', LPAD(b.dealMonth, 2, '0'), '-', b.dealDay)) as dealDate,
+               a.roadName,
+               a.dongCode,
+               b.area as exclusiveArea,
+               a.jibun,
+               b.floor
+          FROM houseinfo a
+          JOIN housedeal b ON a.aptCode = b.aptCode
+         WHERE ST_DISTANCE_SPHERE(
+               POINT(lng, lat),
+               POINT(#{lon}, #{lat})
+               ) <= 100
+         ORDER BY dealDate DESC
         ]]>
     </select>
 
@@ -68,15 +68,15 @@
                CONCAT(b.dongName, ' ', a.jibun) jibunjuso,
                CONCAT(b.sidoName, ' ', b.gugunName, ' ', b.dongName, ' ', a.roadName) dorojuso,
                REPLACE(hd.dealAmount, ',', '') AS dealAmount,
-            DATE(CONCAT(hd.dealYear, '-',LPAD(hd.dealMonth, 2, '0'), '-', hd.dealDay)) AS dealDate,
-            ( hd.area DIV 3.3057 ) AS exclusiveArea
-        FROM houseinfo a
-            JOIN dongcode b
-        ON a.dongCode = b.dongCode
-            JOIN housedeal hd
+               DATE(CONCAT(hd.dealYear, '-',LPAD(hd.dealMonth, 2, '0'), '-', hd.dealDay)) AS dealDate,
+               ( hd.area DIV 3.3057 ) AS exclusiveArea
+          FROM houseinfo a
+          JOIN dongcode b
+            ON a.dongCode = b.dongCode
+          JOIN housedeal hd
             ON a.aptCode = hd.aptCode
-        WHERE a.aptcode = #{aptCode}
-        ORDER BY dealDate desc limit 6
+         WHERE a.aptcode = #{aptCode}
+         ORDER BY dealDate desc limit 6
     </select>
 
 </mapper>
