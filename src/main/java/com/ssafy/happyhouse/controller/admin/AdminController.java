@@ -24,6 +24,14 @@ public class AdminController {
         return ResponseEntity.ok(memberList);
     }
 
+    @GetMapping("/member/detail/{id}")
+    public ResponseEntity<?> findById(@PathVariable("id") Long id){
+
+        Member findMember = memberService.findById(id);
+
+        return ResponseEntity.ok(findMember);
+    }
+
     @DeleteMapping("/member/delete/{id}")
     public ResponseEntity<?> deleteMember(@PathVariable("id") Long id){
 
