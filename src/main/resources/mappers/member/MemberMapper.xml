@@ -64,4 +64,12 @@
         WHERE username=#{username}
         ]]>
     </select>
+
+    <select id="findMemberByRefreshToken" parameterType="string" resultType="member">
+		<![CDATA[
+        SELECT *
+        FROM SSAFYHOME.MEMBERS
+        WHERE refresh_token=#{refreshToken}
+        ]]>
+    </select>
 </mapper>

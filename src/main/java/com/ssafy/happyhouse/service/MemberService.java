@@ -89,4 +89,14 @@ public class MemberService {
 
         return false;
     }
+
+    public Member findMemberByRefreshToken(String refreshToken){
+
+        Member findMember = memberMapper.findMemberByRefreshToken(refreshToken);
+
+        if (findMember == null)
+            throw new RuntimeException("Not Found Member"); //TODO
+
+        return findMember;
+    }
 }
