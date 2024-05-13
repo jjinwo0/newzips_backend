@@ -3,11 +3,14 @@ package com.ssafy.happyhouse.service;
 import com.ssafy.happyhouse.dto.member.MemberDto;
 import com.ssafy.happyhouse.entity.member.Member;
 import com.ssafy.happyhouse.entity.member.constant.Role;
+import com.ssafy.happyhouse.global.token.JwtTokenDto;
 import com.ssafy.happyhouse.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,5 +101,19 @@ public class MemberService {
             throw new RuntimeException("Not Found Member"); //TODO
 
         return findMember;
+    }
+
+    @Transactional
+    public void updateToken(Long id, JwtTokenDto token){
+
+        String refreshToken = token.getRefreshToken();
+        LocalDateTime refreshTokenExpireTime = token.getRefreshTokenExpireTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        memberMapper.updateToken(id, refreshToken, refreshTokenExpireTime);
+    }
+
+    public void expireToken(Long id, LocalDateTime now) {
+
+        memberMapper.expireToken(id, now);
     }
 }

@@ -31,6 +31,8 @@ public class TokenManager {
 
         return JwtTokenDto.builder()
                 .id(id)
+                .username(username)
+                .role(role)
                 .grantType(GrantType.BEARER.getType())
                 .accessToken(accessToken)
                 .accessTokenExpireTime(accessTokenExpireTime)

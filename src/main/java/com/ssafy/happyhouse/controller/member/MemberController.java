@@ -29,7 +29,7 @@ public class MemberController {
     private final TokenManager tokenManager;
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginMember(@RequestBody MemberDto.Request dto,
+    public ResponseEntity<JwtTokenDto> loginMember(@RequestBody MemberDto.Request dto,
                                          HttpServletRequest request,
                                          HttpServletResponse response) {
 
@@ -41,12 +41,14 @@ public class MemberController {
         System.out.println("Password :: " + dto.getPassword());
 
         JwtTokenDto token = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole());
-        findMember.updateToken(token);
+        memberService.updateToken(findMember.getId(), token);
 
         Cookie cookie = new Cookie("accessToken", token.getRefreshToken());
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24 * 7); // 1주일
         response.addCookie(cookie);
+
+        log.info("response :: " + token);
 
         return ResponseEntity.ok(token);
     }
@@ -55,18 +57,22 @@ public class MemberController {
     public ResponseEntity<?> logout(HttpServletRequest request,
                                     HttpServletResponse response) {
 
-        String authorization = request.getHeader("Authorization");
-        String accessToken = authorization.split(" ")[1];
+        try {
+            String authorization = request.getHeader("Authorization");
+            String accessToken = authorization.split(" ")[1];
 
-        Claims claims = tokenManager.getTokenClaims(accessToken);
+            Claims claims = tokenManager.getTokenClaims(accessToken);
 
-        Member findMember = memberService.findById(Long.valueOf((Integer) claims.get("id")));
-        findMember.expireToken(LocalDateTime.now());
+            Member findMember = memberService.findById(Long.valueOf((Integer) claims.get("id")));
+            memberService.expireToken(findMember.getId(), LocalDateTime.now());
 
-        Cookie cookie = new Cookie("loginMember", null);
-        cookie.setPath("/");
-        cookie.setMaxAge(0); // 쿠키의 만료 시간을 0으로 설정하여 삭제한다.
-        response.addCookie(cookie);
+            Cookie cookie = new Cookie("loginMember", null);
+            cookie.setPath("/");
+            cookie.setMaxAge(0); // 쿠키의 만료 시간을 0으로 설정하여 삭제한다.
+            response.addCookie(cookie);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
         return ResponseEntity.ok("Logout Success");
     }

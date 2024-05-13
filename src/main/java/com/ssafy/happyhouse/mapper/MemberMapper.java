@@ -1,8 +1,11 @@
 package com.ssafy.happyhouse.mapper;
 
 import com.ssafy.happyhouse.entity.member.Member;
+import com.ssafy.happyhouse.global.token.JwtTokenDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -24,5 +27,9 @@ public interface MemberMapper {
     List<Member> findByUsername(String username);
 
     Member findMemberByRefreshToken(String refreshToken);
+
+    void updateToken(@Param("id") Long id, @Param("refreshToken") String refreshToken, @Param("refreshTokenExpireTime") LocalDateTime refreshTokenExpireTime);
+
+    void expireToken(@Param("id") Long id, @Param("now") LocalDateTime now);
 }
 

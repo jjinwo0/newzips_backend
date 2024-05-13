@@ -37,7 +37,7 @@ public class Member {
     @NotNull
     private Role role;
 
-    @Size(max = 250)
+    @Size(max = 500)
     private String refreshToken;
 
     private LocalDateTime tokenExpirationTime;

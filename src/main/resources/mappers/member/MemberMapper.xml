@@ -72,4 +72,20 @@
         WHERE refresh_token=#{refreshToken}
         ]]>
     </select>
+
+    <update id="updateToken">
+		<![CDATA[
+        UPDATE SSAFYHOME.MEMBERS
+        SET refresh_token=#{refreshToken}, refresh_token_expiration_time=#{refreshTokenExpireTime}
+        WHERE id=#{id}
+        ]]>
+    </update>
+
+    <update id="expireToken">
+		<![CDATA[
+        UPDATE SSAFYHOME.MEMBERS
+        SET refresh_token_expiration_time=#{refreshTokenExpireTime}
+        WHERE id=#{id}
+        ]]>
+    </update>
 </mapper>
