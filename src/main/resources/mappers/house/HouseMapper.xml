@@ -79,4 +79,14 @@
          ORDER BY dealDate desc limit 6
     </select>
 
+    <select id="getApartListByAddressName" parameterType="AddressName" resultType="MapMarkerInfo">
+        SELECT aptCode, apartmentName, lng, lat
+         FROM houseInfo
+        WHERE dongCode = (
+                            SELECT dongCode
+                              FROM dongCode
+                             WHERE gugunName = #{gugunName} AND dongName = #{dongName}
+        );
+    </select>
+
 </mapper>
