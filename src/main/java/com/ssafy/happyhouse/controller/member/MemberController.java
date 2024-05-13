@@ -2,7 +2,10 @@ package com.ssafy.happyhouse.controller.member;
 
 import com.ssafy.happyhouse.dto.member.MemberDto;
 import com.ssafy.happyhouse.entity.member.Member;
+import com.ssafy.happyhouse.global.token.JwtTokenDto;
+import com.ssafy.happyhouse.global.token.TokenManager;
 import com.ssafy.happyhouse.service.MemberService;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @RestController
 @RequestMapping("/member")
@@ -20,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+
+    private final TokenManager tokenManager;
 
     @PostMapping("/login")
     public ResponseEntity<?> loginMember(@RequestBody MemberDto.Request dto,
@@ -33,21 +40,28 @@ public class MemberController {
         System.out.println("Username :: " + dto.getUsername());
         System.out.println("Password :: " + dto.getPassword());
 
-        HttpSession session = request.getSession();
+        JwtTokenDto token = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole());
+        findMember.updateToken(token);
 
-        session.setAttribute("loginMember", findMember);
-
-        Cookie cookie = new Cookie("loginMember", session.getId());
+        Cookie cookie = new Cookie("accessToken", token.getRefreshToken());
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24 * 7); // 1주일
         response.addCookie(cookie);
 
-        return ResponseEntity.ok(findMember);
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request,
                                     HttpServletResponse response) {
+
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        Claims claims = tokenManager.getTokenClaims(accessToken);
+
+        Member findMember = memberService.findById(Long.valueOf((Integer) claims.get("id")));
+        findMember.expireToken(LocalDateTime.now());
 
         Cookie cookie = new Cookie("loginMember", null);
         cookie.setPath("/");
