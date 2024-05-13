@@ -76,7 +76,8 @@
           JOIN housedeal hd
             ON a.aptCode = hd.aptCode
          WHERE a.aptcode = #{aptCode}
-         ORDER BY dealDate desc limit 6
+         ORDER BY dealDate desc
     </select>
+
 
 </mapper>

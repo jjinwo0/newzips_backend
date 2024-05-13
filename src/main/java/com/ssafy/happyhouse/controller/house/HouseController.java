@@ -31,6 +31,22 @@ public class HouseController {
         return ResponseEntity.ok(findList);
     }
 
+    @GetMapping("/list/name/{name}")
+    public ResponseEntity<?> findApartListByName(@PathVariable("name") String apartName) {
+
+        List<HouseDeal> findList = houseService.findHouseDealByName(apartName);
+
+        if (findList.isEmpty())
+            return ResponseEntity.ok(Collections.emptyList());
+
+        return ResponseEntity.ok(findList);
+    }
+
+    /**
+     * 아파트 정보 조회
+     * @param aptCode 아파트 id
+     * @return
+     */
     @GetMapping("/detail/{code}")
     public ResponseEntity<?> findDetail(@PathVariable("code") Long aptCode){
 
@@ -42,14 +58,4 @@ public class HouseController {
         return ResponseEntity.ok(findDetail);
     }
 
-    @GetMapping("/list/name/{name}")
-    public ResponseEntity<?> findApartListByName(@PathVariable("name") String apartName) {
-
-        List<HouseDeal> findList = houseService.findHouseDealByName(apartName);
-
-        if (findList.isEmpty())
-            return ResponseEntity.ok(Collections.emptyList());
-
-        return ResponseEntity.ok(findList);
-    }
 }

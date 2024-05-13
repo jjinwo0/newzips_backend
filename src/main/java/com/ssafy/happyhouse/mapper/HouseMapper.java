@@ -16,4 +16,5 @@ public interface HouseMapper {
     public List<HouseDeal> getHouseDetailByAptCode(Long aptCode);
 
     public List<HouseDeal> getHouseListByLatLng(Map<String, Object> map);
+
 }
