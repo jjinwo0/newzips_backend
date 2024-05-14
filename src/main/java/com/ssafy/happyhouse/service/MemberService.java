@@ -3,6 +3,8 @@ package com.ssafy.happyhouse.service;
 import com.ssafy.happyhouse.dto.member.MemberDto;
 import com.ssafy.happyhouse.entity.member.Member;
 import com.ssafy.happyhouse.entity.member.constant.Role;
+import com.ssafy.happyhouse.global.error.ErrorCode;
+import com.ssafy.happyhouse.global.error.exception.EntityNotFoundException;
 import com.ssafy.happyhouse.global.token.JwtTokenDto;
 import com.ssafy.happyhouse.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,12 @@ public class MemberService {
 
     public List<Member> findAll() {
 
-        return memberMapper.findAll();
+        List<Member> findAll = memberMapper.findAll();
+
+        if (findAll.isEmpty())
+            throw new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS);
+
+        return findAll;
     }
 
     public Member findByUsernameAndPassword(String username, String password){
@@ -37,7 +44,7 @@ public class MemberService {
         Member findMember = memberMapper.findByUsernameAndPassword(map);
 
         if (findMember == null)
-            throw new RuntimeException("Not Found Member");
+            throw new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS);
 
         return findMember;
     }
@@ -47,7 +54,7 @@ public class MemberService {
         Member findMember = memberMapper.findById(id);
 
         if (findMember == null)
-            throw new RuntimeException("Not Found Member");
+            throw new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS);
 
         return findMember;
     }
@@ -98,7 +105,7 @@ public class MemberService {
         Member findMember = memberMapper.findMemberByRefreshToken(refreshToken);
 
         if (findMember == null)
-            throw new RuntimeException("Not Found Member"); //TODO
+            throw new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS);
 
         return findMember;
     }
