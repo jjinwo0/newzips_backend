@@ -1,6 +1,8 @@
 package com.ssafy.happyhouse.service;
 
 import com.ssafy.happyhouse.entity.house.HouseDeal;
+import com.ssafy.happyhouse.global.error.ErrorCode;
+import com.ssafy.happyhouse.global.error.exception.EntityNotFoundException;
 import com.ssafy.happyhouse.mapper.HouseMapper;
 import com.ssafy.happyhouse.request.AddressName;
 import com.ssafy.happyhouse.response.MapMarkerInfo;
@@ -59,6 +61,8 @@ public class HouseService {
      * @return
      */
     public List<MapMarkerInfo> findApartListByAddressName(AddressName addressName) {
-        return houseMapper.getApartListByAddressName(addressName);
+        List<MapMarkerInfo> apartListByAddressName = houseMapper.getApartListByAddressName(addressName);
+
+        return apartListByAddressName;
     }
 }

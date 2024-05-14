@@ -30,6 +30,6 @@ public interface MemberMapper {
 
     void updateToken(@Param("id") Long id, @Param("refreshToken") String refreshToken, @Param("refreshTokenExpireTime") LocalDateTime refreshTokenExpireTime);
 
-    void expireToken(@Param("id") Long id, @Param("now") LocalDateTime now);
+    void expireToken(Map<String, Object> map);
 }
 
