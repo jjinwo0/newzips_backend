@@ -36,22 +36,6 @@ public class HouseController {
     }
 
     /**
-     * 아파트 코드를 통해 아파트 상세 정보 조회
-     * @param aptCode
-     * @return
-     */
-    @GetMapping("/detail/{code}")
-    public ResponseEntity<?> findDetail(@PathVariable("code") Long aptCode){
-
-        List<HouseDeal> findDetail = houseService.findHouseDealByAptCode(aptCode);
-
-        if (findDetail.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        return ResponseEntity.ok(findDetail);
-    }
-
-    /**
      * 아파트명으로 아파트 정보를 검색
      * @param apartName
      * @return

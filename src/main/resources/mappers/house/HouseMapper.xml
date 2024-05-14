@@ -80,13 +80,52 @@
     </select>
 
     <select id="getApartListByAddressName" parameterType="AddressName" resultType="MapMarkerInfo">
-        SELECT aptCode, apartmentName, lng, lat
-         FROM houseInfo
-        WHERE dongCode = (
-                            SELECT dongCode
-                              FROM dongCode
-                             WHERE gugunName = #{gugunName} AND dongName = #{dongName}
-        );
+        -- getApartListByAddressName 구/군, 동 이름을 활용해 아파트의 최신 거래내역을 조회한다.
+        WITH RankedData AS (
+
+            SELECT aptCode,
+                   dealAmount,
+                   exclusiveArea,
+                   dealDate,
+                   apartmentName,
+                   lng,
+                   lat,
+                   ROW_NUMBER() OVER (PARTITION BY aptcode ORDER BY dealDate DESC) AS rn
+            FROM (
+                     SELECT a.aptCode,
+                            replace(a.dealAmount, ',', '')/10000 AS dealAmount,
+                            ( a.area DIV 3.3057 ) as exclusiveArea,
+                            DATE(CONCAT(a.dealYear, '-',LPAD(a.dealMonth, 2, '0'), '-', a.dealDay)) AS dealDate,
+                            b.apartmentName,
+                            b.lng,
+                            b.lat
+                       FROM housedeal a
+           RIGHT OUTER JOIN (
+                                SELECT aptCode, apartmentName, lng, lat
+                                  FROM houseInfo
+                                 WHERE dongCode = (
+                                                    SELECT dongCode
+                                                      FROM dongCode
+                                                     WHERE gugunName = #{gugunName} AND dongName = #{dongName}
+                                                  )
+                              ) b
+                         ON a.aptCode = b.aptCode
+                      ORDER BY dealDate DESC
+                  ) a
+        )
+
+        SELECT  aptCode,
+                dealAmount,
+                exclusiveArea,
+                dealDate,
+                apartmentName,
+                lng,
+                lat
+          FROM RankedData
+         WHERE rn = 1;
+
+
+
     </select>
 
 </mapper>
