@@ -112,8 +112,14 @@ public class MemberService {
         memberMapper.updateToken(id, refreshToken, refreshTokenExpireTime);
     }
 
+    @Transactional
     public void expireToken(Long id, LocalDateTime now) {
 
-        memberMapper.expireToken(id, now);
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id", id);
+        map.put("now", now);
+
+        memberMapper.expireToken(map);
     }
 }

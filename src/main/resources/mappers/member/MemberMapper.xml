@@ -84,7 +84,7 @@
     <update id="expireToken">
 		<![CDATA[
         UPDATE SSAFYHOME.MEMBERS
-        SET refresh_token_expiration_time=#{refreshTokenExpireTime}
+        SET refresh_token_expiration_time=#{now}
         WHERE id=#{id}
         ]]>
     </update>
