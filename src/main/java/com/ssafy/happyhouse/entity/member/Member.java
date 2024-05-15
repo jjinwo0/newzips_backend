@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.entity.member;
 
+import com.ssafy.happyhouse.entity.member.constant.MemberType;
 import com.ssafy.happyhouse.entity.member.constant.Role;
 import com.ssafy.happyhouse.global.token.JwtTokenDto;
 import jakarta.validation.constraints.Email;
@@ -37,17 +38,21 @@ public class Member {
     @NotNull
     private Role role;
 
+    @NotNull
+    private MemberType memberType;
+
     @Size(max = 500)
     private String refreshToken;
 
     private LocalDateTime tokenExpirationTime;
 
     @Builder
-    public Member(String username, String email, String password, Role role) {
+    public Member(String username, String email, String password, Role role, MemberType memberType) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.memberType = memberType;
     }
 
     public void updateToken(JwtTokenDto jwtTokenDto) {
