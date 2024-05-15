@@ -37,8 +37,13 @@
 
     <insert id="join" parameterType="member">
 		<![CDATA[
-        INSERT INTO SSAFYHOME.MEMBERS (username, email, password, role)
-        VALUES (#{username}, #{email}, #{password}, #{role, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.RoleTypeHandler})
+        INSERT INTO SSAFYHOME.MEMBERS (username, email, password, role, member_type, nickname)
+        VALUES (#{username},
+                #{email},
+                #{password},
+                #{role, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.RoleTypeHandler}),
+                #{member_type, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.MemberTypeHandler},
+                #{nickname})
         ]]>
     </insert>
 

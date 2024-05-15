@@ -100,6 +100,7 @@ public class MemberService {
                 .nickname(dto.getNickname())
                 .role(Role.USER)
                 .memberType(MemberType.LOCAL)
+                .nickname(dto.getNickname())
                 .build();
 
         memberMapper.join(joinMember);
