@@ -2,8 +2,10 @@ package com.ssafy.happyhouse.service;
 
 import com.ssafy.happyhouse.dto.member.MemberDto;
 import com.ssafy.happyhouse.entity.member.Member;
+import com.ssafy.happyhouse.entity.member.constant.MemberType;
 import com.ssafy.happyhouse.entity.member.constant.Role;
 import com.ssafy.happyhouse.global.error.ErrorCode;
+import com.ssafy.happyhouse.global.error.exception.BusinessException;
 import com.ssafy.happyhouse.global.error.exception.EntityNotFoundException;
 import com.ssafy.happyhouse.global.token.JwtTokenDto;
 import com.ssafy.happyhouse.mapper.MemberMapper;
@@ -23,6 +25,22 @@ import java.util.Map;
 public class MemberService {
 
     private final MemberMapper memberMapper;
+
+    public void validUsername(String username){
+
+        Member findByUsername = memberMapper.findByUsername(username);
+
+        if (findByUsername == null)
+            throw new BusinessException(ErrorCode.ALREADY_REGISTERED_USERNAME);
+    }
+
+    public void validEmail(String email){
+
+        Member findByEmail = memberMapper.findByEmail(email);
+
+        if (findByEmail == null)
+            throw new BusinessException(ErrorCode.ALREADY_REGISTERED_USERNAME);
+    }
 
     public List<Member> findAll() {
 
@@ -59,17 +77,41 @@ public class MemberService {
         return findMember;
     }
 
+    public Member findByEmail(String email){
+
+        Member findMember = memberMapper.findByEmail(email);
+
+//        if (findMember == null)
+//            throw new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS);
+
+        return findMember;
+    }
+
     @Transactional
     public void join(MemberDto.Join dto){
+
+        validUsername(dto.getUsername());
+        validEmail(dto.getEmail());
 
         Member joinMember = Member.builder()
                 .username(dto.getUsername())
                 .email(dto.getEmail())
                 .password(dto.getPassword())
+                .nickname(dto.getNickname())
                 .role(Role.USER)
+                .memberType(MemberType.LOCAL)
                 .build();
 
         memberMapper.join(joinMember);
+    }
+
+    @Transactional
+    public void joinByEntity(Member member){
+
+        validUsername(member.getUsername());
+        validEmail(member.getEmail());
+
+        memberMapper.join(member);
     }
 
     @Transactional
@@ -89,17 +131,6 @@ public class MemberService {
 
         memberMapper.delete(id);
     }
-
-    public Boolean findByUsername(String username){
-
-        List<Member> findList = memberMapper.findByUsername(username);
-
-        if (findList.isEmpty())
-            return true;
-
-        return false;
-    }
-
     public Member findMemberByRefreshToken(String refreshToken){
 
         Member findMember = memberMapper.findMemberByRefreshToken(refreshToken);

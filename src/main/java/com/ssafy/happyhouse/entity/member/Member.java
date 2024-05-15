@@ -36,6 +36,9 @@ public class Member {
     private String password;
 
     @NotNull
+    private String nickname;
+
+    @NotNull
     private Role role;
 
     @NotNull
@@ -47,10 +50,11 @@ public class Member {
     private LocalDateTime tokenExpirationTime;
 
     @Builder
-    public Member(String username, String email, String password, Role role, MemberType memberType) {
+    public Member(String username, String email, String password, String nickname, Role role, MemberType memberType) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
         this.role = role;
         this.memberType = memberType;
     }

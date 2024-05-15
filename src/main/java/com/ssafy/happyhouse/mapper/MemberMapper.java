@@ -24,7 +24,9 @@ public interface MemberMapper {
 
     void delete(Long id);
 
-    List<Member> findByUsername(String username);
+    Member findByUsername(String username);
+
+    Member findByEmail(String email);
 
     Member findMemberByRefreshToken(String refreshToken);
 
