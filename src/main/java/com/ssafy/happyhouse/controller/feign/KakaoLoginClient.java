@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface KakaoLoginClient {
 
     @GetMapping(value = "/v2/user/me", consumes = "application/json")
-    KakaoLoginResponseDto getKakaoUserInfo(@RequestHeader("Content-type") String contentType,
+    KakaoLoginResponseDto getKakaoUserInfo(@RequestHeader("Content-Type") String contentType,
                                            @RequestHeader("Authorization") String accessToken);
 }

@@ -1,7 +1,6 @@
 package com.ssafy.happyhouse.global.handler;
 
 import com.ssafy.happyhouse.entity.member.constant.MemberType;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 import org.apache.ibatis.type.TypeHandler;
