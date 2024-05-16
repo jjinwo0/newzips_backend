@@ -9,7 +9,8 @@ public class KakaoLoginResponseDto {
 
     private String id;
 
-    private KakaoAccount account;
+    @JsonProperty("kakao_account")
+    private KakaoAccount kakaoAccount;
 
     @Getter @Builder
     public static class KakaoAccount {

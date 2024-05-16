@@ -30,7 +30,7 @@ public interface MemberMapper {
 
     Member findMemberByRefreshToken(String refreshToken);
 
-    void updateToken(@Param("id") Long id, @Param("refreshToken") String refreshToken, @Param("refreshTokenExpireTime") LocalDateTime refreshTokenExpireTime);
+    void updateToken(Map<String, Object> map);
 
     void expireToken(Map<String, Object> map);
 }

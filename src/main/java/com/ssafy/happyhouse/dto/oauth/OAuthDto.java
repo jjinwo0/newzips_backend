@@ -12,7 +12,8 @@ import java.util.Date;
 
 public class OAuthDto {
 
-    @Data
+    @Data @Builder
+    @NoArgsConstructor @AllArgsConstructor
     public static class Request {
 
         private String memberType;
@@ -29,6 +30,10 @@ public class OAuthDto {
 
         private Role role;
 
+        private String nickname;
+
+        private String memberType;
+
         // 토큰 관련 정보 리턴
         private String grantType;
 
@@ -43,16 +48,18 @@ public class OAuthDto {
         private Date refreshTokenExpireTime;
 
         // ResponseDto에 of 메서드를 작성 (Service에 만들지 않고 숨김)
-        public static Response of(JwtTokenDto jwtTokenDto){
+        public static Response of(JwtTokenDto tokenDto){
             return Response.builder()
-                    .id(jwtTokenDto.getId())
-                    .username(jwtTokenDto.getUsername())
-                    .role(jwtTokenDto.getRole())
-                    .grantType(jwtTokenDto.getGrantType())
-                    .accessToken(jwtTokenDto.getAccessToken())
-                    .accessTokenExpireTime(jwtTokenDto.getAccessTokenExpireTime())
-                    .refreshToken(jwtTokenDto.getRefreshToken())
-                    .refreshTokenExpireTime(jwtTokenDto.getRefreshTokenExpireTime())
+                    .id(tokenDto.getId())
+                    .role(tokenDto.getRole())
+                    .username(tokenDto.getUsername())
+                    .nickname(tokenDto.getNickname())
+                    .memberType(tokenDto.getMemberType())
+                    .grantType(tokenDto.getGrantType())
+                    .accessToken(tokenDto.getAccessToken())
+                    .accessTokenExpireTime(tokenDto.getAccessTokenExpireTime())
+                    .refreshToken(tokenDto.getRefreshToken())
+                    .refreshTokenExpireTime(tokenDto.getRefreshTokenExpireTime())
                     .build();
         }
     }

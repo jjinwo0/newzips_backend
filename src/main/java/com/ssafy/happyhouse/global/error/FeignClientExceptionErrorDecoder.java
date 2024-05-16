@@ -28,7 +28,7 @@ public class FeignClientExceptionErrorDecoder implements ErrorDecoder {
                     exception.getMessage(), // String message
                     response.request().httpMethod(), // HttpMethod httpMethod
                     exception,
-                    null,
+                    (Long) null,
                     response.request()
             );
         }

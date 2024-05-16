@@ -10,6 +10,7 @@ import com.ssafy.happyhouse.global.error.exception.EntityNotFoundException;
 import com.ssafy.happyhouse.global.token.JwtTokenDto;
 import com.ssafy.happyhouse.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class MemberService {
 
         Member findByUsername = memberMapper.findByUsername(username);
 
-        if (findByUsername == null)
+        if (findByUsername != null)
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_USERNAME);
     }
 
@@ -38,7 +40,7 @@ public class MemberService {
 
         Member findByEmail = memberMapper.findByEmail(email);
 
-        if (findByEmail == null)
+        if (findByEmail != null)
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_USERNAME);
     }
 
@@ -70,9 +72,6 @@ public class MemberService {
     public Member findById(Long id){
 
         Member findMember = memberMapper.findById(id);
-
-        if (findMember == null)
-            throw new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS);
 
         return findMember;
     }
@@ -109,8 +108,12 @@ public class MemberService {
     @Transactional
     public void joinByEntity(Member member){
 
-        validUsername(member.getUsername());
-        validEmail(member.getEmail());
+        log.info("Join Member Username : {}", member.getUsername());
+        log.info("Join Member Email : {}", member.getEmail());
+        log.info("Join Member Password : {}", member.getPassword());
+        log.info("Join Member Role : {}", member.getRole());
+        log.info("Join Member Type : {}", member.getMemberType());
+        log.info("Join Member NickName : {}", member.getNickname());
 
         memberMapper.join(member);
     }
@@ -148,7 +151,13 @@ public class MemberService {
         String refreshToken = token.getRefreshToken();
         LocalDateTime refreshTokenExpireTime = token.getRefreshTokenExpireTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-        memberMapper.updateToken(id, refreshToken, refreshTokenExpireTime);
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id", id);
+        map.put("refreshToken", refreshToken);
+        map.put("refreshTokenExpireTime", refreshTokenExpireTime);
+
+        memberMapper.updateToken(map);
     }
 
     @Transactional

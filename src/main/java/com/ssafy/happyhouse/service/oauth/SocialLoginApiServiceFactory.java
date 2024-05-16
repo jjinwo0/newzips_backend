@@ -1,6 +1,8 @@
 package com.ssafy.happyhouse.service.oauth;
 
 import com.ssafy.happyhouse.entity.member.constant.MemberType;
+import com.ssafy.happyhouse.global.error.ErrorCode;
+import com.ssafy.happyhouse.global.error.exception.BusinessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -21,7 +23,8 @@ public class SocialLoginApiServiceFactory {
         String beanName = "";
 
         if (MemberType.KAKAO.equals(memberType))
-            beanName = "kakaoLoginApiService";
+            beanName = "kakaoLoginService";
+        else throw new BusinessException(ErrorCode.INVALID_MEMBER_TYPE);
 
         // Bean Name으로 구현체 추출
         return map.get(beanName);
