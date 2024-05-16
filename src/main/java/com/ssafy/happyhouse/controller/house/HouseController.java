@@ -64,20 +64,20 @@ public class HouseController {
         return ResponseEntity.ok(findList);
     }
 
-//    /**
-//     * 아파트 정보 조회
-//     * @param aptCode 아파트 id
-//     * @return
-//     */
-//    @GetMapping("/detail/{code}")
-//    public ResponseEntity<?> findDetail(@PathVariable("code") Long aptCode){
-//
-//        List<HouseDeal> findDetail = houseService.findHouseDealByAptCode(aptCode);
-//
-//        if (findDetail.isEmpty())
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//
-//        return ResponseEntity.ok(findDetail);
-//    }
+    /**
+     * 아파트 정보 조회
+     * @param aptCode 아파트 id
+     * @return
+     */
+    @GetMapping("/detail/{code}")
+    public ResponseEntity<?> findDetail(@PathVariable("code") Long aptCode){
+
+        List<HouseDeal> findDetail = houseService.findHouseDealByAptCode(aptCode);
+
+        if (findDetail.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(findDetail);
+    }
 
 }
