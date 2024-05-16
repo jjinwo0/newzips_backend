@@ -100,6 +100,7 @@ public class MemberService {
                 .role(Role.USER)
                 .memberType(MemberType.LOCAL)
                 .nickname(dto.getNickname())
+                .profile("https://api.dicebear.com/8.x/pixel-art/svg?seed="+dto.getUsername())
                 .build();
 
         memberMapper.join(joinMember);

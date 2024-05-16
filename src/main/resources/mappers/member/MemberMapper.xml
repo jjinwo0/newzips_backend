@@ -20,7 +20,16 @@
 
     <select id="findById" parameterType="long" resultType="member">
 		<![CDATA[
-        SELECT *
+        SELECT id,
+               username,
+               email,
+               password,
+               role,
+               member_type as memberType,
+               nickname,
+               profile,
+               refresh_token as refreshToken,
+               refresh_token_expiration_time as tokenExpirationTime
         FROM SSAFYHOME.MEMBERS
         WHERE id=#{id}
         ]]>
@@ -28,7 +37,16 @@
 
     <select id="findByUsernameAndPassword" parameterType="map" resultType="member">
 		<![CDATA[
-        SELECT *
+        SELECT id,
+               username,
+               email,
+               password,
+               role,
+               member_type as memberType,
+               nickname,
+               profile,
+               refresh_token as refreshToken,
+               refresh_token_expiration_time as tokenExpirationTime
         FROM SSAFYHOME.MEMBERS
         WHERE username=#{username}
           AND password=#{password}
@@ -37,13 +55,14 @@
 
     <insert id="join" parameterType="member">
 		<![CDATA[
-        INSERT INTO SSAFYHOME.MEMBERS (username, email, password, role, member_type, nickname)
+        INSERT INTO SSAFYHOME.MEMBERS (username, email, password, role, member_type, nickname, profile)
         VALUES (#{username},
                 #{email},
                 #{password},
                 #{role, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.RoleTypeHandler},
                 #{memberType, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.MemberTypeHandler},
-                #{nickname})
+                #{nickname},
+                #{profile})
         ]]>
     </insert>
 

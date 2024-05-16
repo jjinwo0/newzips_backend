@@ -31,7 +31,7 @@ public class OAuthAttributes {
                 .password("1234")
                 .email(email)
                 .username(email.split("@")[0])
-                .image(profile)
+                .profile(profile)
                 .nickname(nickname)
                 .build();
     }

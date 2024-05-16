@@ -34,6 +34,8 @@ public class OAuthDto {
 
         private String memberType;
 
+        private String profile;
+
         // 토큰 관련 정보 리턴
         private String grantType;
 
@@ -54,6 +56,7 @@ public class OAuthDto {
                     .role(tokenDto.getRole())
                     .username(tokenDto.getUsername())
                     .nickname(tokenDto.getNickname())
+                    .profile(tokenDto.getProfile())
                     .memberType(tokenDto.getMemberType())
                     .grantType(tokenDto.getGrantType())
                     .accessToken(tokenDto.getAccessToken())

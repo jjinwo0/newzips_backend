@@ -35,7 +35,7 @@ public class OAuthLoginService {
 
         JwtTokenDto tokenDto;
 
-        Member findMember = memberService.findByEmail(userInfo.getEmail());
+        Member findMember = memberService.findById(userInfo.getId());
 
         // 신규 회원
         if (findMember == null) {
@@ -44,11 +44,11 @@ public class OAuthLoginService {
 
             memberService.joinByEntity(oauthMember);
 
-            tokenDto = tokenManager.createJwtTokenDto(oauthMember.getId(), oauthMember.getUsername(), oauthMember.getRole(), oauthMember.getNickname(), oauthMember.getMemberType().getMemberType());
+            tokenDto = tokenManager.createJwtTokenDto(oauthMember.getId(), oauthMember.getUsername(), oauthMember.getRole(), oauthMember.getNickname(), oauthMember.getMemberType().getMemberType(), oauthMember.getProfile());
             memberService.updateToken(oauthMember.getId(), tokenDto);
         } else { // 기존 회원
 
-            tokenDto = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole(), findMember.getNickname(), findMember.getMemberType().getMemberType());
+            tokenDto = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole(), findMember.getNickname(), findMember.getMemberType().getMemberType(), findMember.getProfile());
             memberService.updateToken(findMember.getId(), tokenDto);
         }
         
