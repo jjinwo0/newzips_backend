@@ -39,12 +39,13 @@ public class Member {
     private String nickname;
 
     @NotNull
+    private String profile;
+
+    @NotNull
     private Role role;
 
     @NotNull
     private MemberType memberType;
-
-    private String profile;
 
     @Size(max = 500)
     private String refreshToken;

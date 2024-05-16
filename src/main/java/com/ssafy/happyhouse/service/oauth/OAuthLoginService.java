@@ -51,7 +51,7 @@ public class OAuthLoginService {
             tokenDto = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole(), findMember.getNickname(), findMember.getMemberType().getMemberType(), findMember.getProfile());
             memberService.updateToken(findMember.getId(), tokenDto);
         }
-        
+
         return OAuthDto.Response.of(tokenDto);
     }
 }
