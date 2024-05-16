@@ -39,31 +39,21 @@ public class Member {
     private String nickname;
 
     @NotNull
+    private String profile;
+
+    @NotNull
     private Role role;
 
     @NotNull
     private MemberType memberType;
-
-    private String image;
 
     @Size(max = 500)
     private String refreshToken;
 
     private LocalDateTime tokenExpirationTime;
 
-//    @Builder
-//    public Member(String username, String email, String password, String nickname, Role role, MemberType memberType, String image) {
-//        this.username = username;
-//        this.email = email;
-//        this.password = password;
-//        this.nickname = nickname;
-//        this.role = role;
-//        this.memberType = memberType;
-//        this.image = image;
-//    }
-
     @Builder
-    public Member(Long id, String username, String email, String password, String nickname, Role role, MemberType memberType, String image) {
+    public Member(Long id, String username, String email, String password, String nickname, Role role, MemberType memberType, String profile) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -71,31 +61,6 @@ public class Member {
         this.nickname = nickname;
         this.role = role;
         this.memberType = memberType;
-        this.image = image;
-    }
-
-    public void updateToken(JwtTokenDto jwtTokenDto) {
-        this.refreshToken = jwtTokenDto.getRefreshToken();
-        this.tokenExpirationTime = jwtTokenDto.getRefreshTokenExpireTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    }
-
-    public void expireToken(LocalDateTime now) {
-        this.tokenExpirationTime = now;
-    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", role=" + role +
-                ", memberType=" + memberType +
-                ", image='" + image + '\'' +
-                ", refreshToken='" + refreshToken + '\'' +
-                ", tokenExpirationTime=" + tokenExpirationTime +
-                '}';
+        this.profile = profile;
     }
 }

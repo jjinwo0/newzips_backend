@@ -22,7 +22,7 @@ public class TokenManager {
     private final String tokenSecret;
 
 
-    public JwtTokenDto createJwtTokenDto(Long id, String username, Role role, String nickname, String memberType){
+    public JwtTokenDto createJwtTokenDto(Long id, String username, Role role, String nickname, String memberType, String profile){
         Date accessTokenExpireTime = createAccessTokenExpireTime();
         Date refreshTokenExpireTime = createRefreshTokenExpireTime();
 
@@ -35,6 +35,7 @@ public class TokenManager {
                 .role(role)
                 .nickname(nickname)
                 .memberType(memberType)
+                .profile(profile)
                 .grantType(GrantType.BEARER.getType())
                 .accessToken(accessToken)
                 .accessTokenExpireTime(accessTokenExpireTime)
