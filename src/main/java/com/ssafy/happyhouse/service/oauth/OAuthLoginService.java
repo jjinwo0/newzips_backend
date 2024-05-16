@@ -22,10 +22,7 @@ public class OAuthLoginService {
     private final MemberService memberService;
     private final TokenManager tokenManager;
 
-    @Transactional
     public OAuthDto.Response oauthLogin(String accessToken, MemberType memberType) {
-
-        log.info("memberType check: {}", memberType.getMemberType());
 
         SocialLoginApiService socialLoginService = SocialLoginApiServiceFactory.getSocialLoginService(memberType);
 
@@ -44,14 +41,14 @@ public class OAuthLoginService {
 
             memberService.joinByEntity(oauthMember);
 
-            tokenDto = tokenManager.createJwtTokenDto(oauthMember.getId(), oauthMember.getUsername(), oauthMember.getRole(), oauthMember.getNickname(), oauthMember.getMemberType().getMemberType());
+            tokenDto = tokenManager.createJwtTokenDto(oauthMember.getId(), oauthMember.getUsername(), oauthMember.getRole());
             memberService.updateToken(oauthMember.getId(), tokenDto);
         } else { // 기존 회원
 
-            tokenDto = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole(), findMember.getNickname(), findMember.getMemberType().getMemberType());
+            tokenDto = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole());
             memberService.updateToken(findMember.getId(), tokenDto);
         }
-        
+
         return OAuthDto.Response.of(tokenDto);
     }
 }

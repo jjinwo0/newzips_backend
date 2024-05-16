@@ -40,7 +40,7 @@ public class MemberController {
         System.out.println("Username :: " + dto.getUsername());
         System.out.println("Password :: " + dto.getPassword());
 
-        JwtTokenDto token = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole(), findMember.getNickname(), findMember.getMemberType().getMemberType());
+        JwtTokenDto token = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole());
         memberService.updateToken(findMember.getId(), token);
 
         Cookie cookie = new Cookie("accessToken", token.getRefreshToken());

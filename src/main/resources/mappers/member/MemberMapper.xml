@@ -41,8 +41,8 @@
         VALUES (#{username},
                 #{email},
                 #{password},
-                #{role, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.RoleTypeHandler},
-                #{memberType, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.MemberTypeHandler},
+                #{role, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.RoleTypeHandler}),
+                #{member_type, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.MemberTypeHandler},
                 #{nickname})
         ]]>
     </insert>
@@ -86,7 +86,7 @@
         ]]>
     </select>
 
-    <update id="updateToken" parameterType="map">
+    <update id="updateToken">
 		<![CDATA[
         UPDATE SSAFYHOME.MEMBERS
         SET refresh_token=#{refreshToken}, refresh_token_expiration_time=#{refreshTokenExpireTime}
