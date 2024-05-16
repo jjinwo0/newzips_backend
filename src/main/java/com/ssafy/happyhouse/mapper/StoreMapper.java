@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.mapper;
 
 import com.ssafy.happyhouse.redis.entity.Store;
+import com.ssafy.happyhouse.request.AddressName;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,4 +10,6 @@ import java.util.List;
 public interface StoreMapper {
 
     List<Store> findALl();
+
+    String findDongCodeByDongName(AddressName addressName);
 }

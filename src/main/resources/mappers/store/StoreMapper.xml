@@ -6,14 +6,21 @@
     <select id="findALl" resultType="com.ssafy.happyhouse.redis.entity.Store">
         SELECT storeCode,
                storeName,
-               storeTypeCode,
-               storeTypeName,
+               mainCategoryCode,
+               mainCategoryName,
+               subCategoryCode,
+               subCategoryName,
                dongCode,
                dongName,
-               jibun,
                doro,
                lng,
                lat
           FROM store
+    </select>
+
+    <select id="findDongCodeByDongName" parameterType="AddressName" resultType="String">
+        SELECT dongCode
+          FROM dongCode
+         WHERE gugunName = #{gugunName} AND dongName = #{dongName}
     </select>
 </mapper>
