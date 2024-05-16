@@ -41,11 +41,11 @@ public class OAuthLoginService {
 
             memberService.joinByEntity(oauthMember);
 
-            tokenDto = tokenManager.createJwtTokenDto(oauthMember.getId(), oauthMember.getUsername(), oauthMember.getRole());
+            tokenDto = tokenManager.createJwtTokenDto(oauthMember.getId(), oauthMember.getUsername(), oauthMember.getRole(), oauthMember.getProfile());
             memberService.updateToken(oauthMember.getId(), tokenDto);
         } else { // 기존 회원
 
-            tokenDto = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole());
+            tokenDto = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole(), findMember.getProfile());
             memberService.updateToken(findMember.getId(), tokenDto);
         }
 

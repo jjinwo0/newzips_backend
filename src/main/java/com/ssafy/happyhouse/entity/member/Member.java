@@ -39,6 +39,9 @@ public class Member {
     private String nickname;
 
     @NotNull
+    private String profile;
+
+    @NotNull
     private Role role;
 
     @NotNull
@@ -50,22 +53,13 @@ public class Member {
     private LocalDateTime tokenExpirationTime;
 
     @Builder
-    public Member(String username, String email, String password, String nickname, Role role, MemberType memberType) {
+    public Member(String username, String email, String password, String nickname, String profile, Role role, MemberType memberType) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.profile = profile;
         this.role = role;
         this.memberType = memberType;
     }
-
-    public void updateToken(JwtTokenDto jwtTokenDto) {
-        this.refreshToken = jwtTokenDto.getRefreshToken();
-        this.tokenExpirationTime = jwtTokenDto.getRefreshTokenExpireTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    }
-
-    public void expireToken(LocalDateTime now) {
-        this.tokenExpirationTime = now;
-    }
-
 }

@@ -16,6 +16,7 @@ public class JwtTokenDto {
     private Long id;
     private String username;
     private Role role;
+    private String profile;
     private String grantType;
     private String accessToken;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
