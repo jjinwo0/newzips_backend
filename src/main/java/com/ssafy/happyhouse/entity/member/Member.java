@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.entity.member;
 
+import com.ssafy.happyhouse.entity.chat.EnteredRoom;
 import com.ssafy.happyhouse.entity.member.constant.MemberType;
 import com.ssafy.happyhouse.entity.member.constant.Role;
 import com.ssafy.happyhouse.global.token.JwtTokenDto;
@@ -14,7 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Validated
@@ -46,6 +49,8 @@ public class Member {
 
     @NotNull
     private MemberType memberType;
+
+    private List<EnteredRoom> enteredRooms = new ArrayList<>();
 
     @Size(max = 500)
     private String refreshToken;

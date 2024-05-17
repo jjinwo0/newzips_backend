@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.mapper.RoomMapper">
+
+    <resultMap id="room" type="com.ssafy.happyhouse.entity.chat.Room">
+        <id column="room_id" property="roomId"/>
+        <result column="name" property="name"/>
+        <collection property="enteredRoom" ofType="com.ssafy.happyhouse.entity.chat.EnteredRoom">
+            <id column="enteredRoom_id" property="enteredRoomId"/>
+            <association property="member" javaType="com.ssafy.happyhouse.entity.member.Member">
+                <id column="member_id" property="id"/>
+                <result column="username" property="username"/>
+                <result column="email" property="email"/>
+                <result column="password" property="password"/>
+                <result column="role" property="role"/>
+                <result column="profile" property="profile"/>
+                <result column="nickname" property="nickname"/>
+                <result column="member_type" property="memberType"/>
+            </association>
+        </collection>
+    </resultMap>
+</mapper>

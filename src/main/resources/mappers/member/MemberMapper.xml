@@ -4,11 +4,21 @@
 <mapper namespace="com.ssafy.happyhouse.mapper.MemberMapper">
 
     <resultMap id="member" type="com.ssafy.happyhouse.entity.member.Member">
-        <result column="id" property="id"/>
+        <id column="member_id" property="id"/>
         <result column="username" property="username"/>
         <result column="email" property="email"/>
         <result column="password" property="password"/>
         <result column="role" property="role"/>
+        <result column="profile" property="profile"/>
+        <result column="nickname" property="nickname"/>
+        <result column="member_type" property="memberType"/>
+        <collection property="enteredRoom" ofType="com.ssafy.happyhouse.entity.chat.EnteredRoom">
+            <id column="enteredRoom_id" property="enteredRoomId"/>
+            <association property="room" javaType="com.ssafy.happyhouse.entity.chat.Room">
+                <id column="room_id" property="roomId"/>
+                <result column="name" property="name"/>
+            </association>
+        </collection>
     </resultMap>
 
     <select id="findAll" resultType="member">
