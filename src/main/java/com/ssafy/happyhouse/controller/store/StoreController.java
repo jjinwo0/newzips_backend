@@ -26,9 +26,9 @@ public class StoreController {
     public ResponseEntity<?> findStoreListByAddressName(@ModelAttribute StoreCondition storeCondition) {
 
         log.info(storeCondition.toString());
-        //List<Store> findList = storeService.getStoresByDong(addressName);
+        List<Store> findList = storeService.getStoreIdsByDongCodeAndCategory(storeCondition);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(findList);
     }
 
 }

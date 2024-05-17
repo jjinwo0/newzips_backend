@@ -3,6 +3,7 @@ package com.ssafy.happyhouse.service;
 import com.ssafy.happyhouse.mapper.StoreMapper;
 import com.ssafy.happyhouse.redis.entity.Store;
 import com.ssafy.happyhouse.request.AddressName;
+import com.ssafy.happyhouse.request.StoreCondition;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,7 @@ public class StoreService {
             // 필요한 데이터 설정
             Map<String, Object> storeData = new HashMap<>();
             storeData.put("storeName", store.getStoreName());
+            storeData.put("mainCategoryCode", store.getMainCategoryCode());
             storeData.put("mainCategoryName", store.getMainCategoryName());
             storeData.put("doro", store.getDoro());
             storeData.put("lat", store.getLat());
@@ -65,10 +67,10 @@ public class StoreService {
             // store Id를 동에 기반한 set에 저장 (dong:동코드, 상점ID)
             redisTemplate.opsForSet().add(DONG_KEY_PREFIX + store.getDongCode(), store.getStoreCode());
 
-            // store ID를 업종에 기반한 set에 저장 (type:G1, 상점ID)
+            // store ID를 업종에 기반한 set에 저장 (category:G1, 상점ID)
             redisTemplate.opsForSet().add(CATEGORY_KEY_PREFIX + store.getSubCategoryCode(), store.getStoreCode());
 
-            // store Id를 동과 업종에 기반한 set에 저장 (dong:동코드:type:G1, 상점ID)
+            // store Id를 동과 업종에 기반한 set에 저장 (dong:동코드:category:G1, 상점ID)
             redisTemplate.opsForSet().add(String.format(DONG_CATEGORY_KEY_PREFIX, store.getDongCode(), store.getMainCategoryCode()), store.getStoreCode() );
 
         }
@@ -81,10 +83,6 @@ public class StoreService {
 
     public Set<String> getStoreIdsByCategoryCode(String categoryCode) {
         return redisTemplate.opsForSet().members(CATEGORY_KEY_PREFIX+categoryCode);
-    }
-
-    public Set<String> getStoreIdsByDongCodeAndType(String dongCode, String category) {
-        return redisTemplate.opsForSet().members(String.format(DONG_CATEGORY_KEY_PREFIX, dongCode, category));
     }
 
     public List<Store> getStoresByDong(AddressName addressName) {
@@ -103,7 +101,50 @@ public class StoreService {
         return getStoresByIds(storeIds);
     }
 
+    /**
+     * 동 코드와 상업 분류 코드를 기반으로 상점 아이디를 반환한다.
+     * @param storeCondition
+     * @return
+     */
+    public List<Store> getStoreIdsByDongCodeAndCategory(StoreCondition storeCondition) {
+
+        AddressName addressName = (AddressName) storeCondition;
+        // 동코드를 받아온다.
+        String dongCode = storeMapper.findDongCodeByDongName(addressName);
+
+        // 상업 분류 코드
+        List<String> categoryOptionList = storeCondition.selectedOptions();
+
+        // 상점 ID
+        Set<String> storeIds = new HashSet<String>();
+
+        for(String category : categoryOptionList) {
+
+            // dong:동코드:category:G1
+            String key = String.format(DONG_CATEGORY_KEY_PREFIX, dongCode, category);
+
+            // redis에서 현재 지역과 선택한 상업 분류 코드를 기반으로 상점 id를 가져온다.
+            Set<String> result = redisTemplate.opsForSet().members(key);
+
+            if(result != null) {
+                storeIds.addAll(result);
+            }
+        }
+        return getStoresByIds(storeIds);
+    }
+
+    /**
+     * 상점 ID를 기반으로 상점 상세 내용을 반환한다.
+     * @param storeIds
+     * @return
+     */
     private List<Store> getStoresByIds(Set<String> storeIds) {
+
+        // 조회할 id가 없는 경우에는 빈 리스트를 넘겨준다.
+        if(storeIds == null) {
+            return Collections.emptyList();
+        }
+
         return storeIds.stream()
                 .map(id -> {
                     String storeKey = STORE_KEY_PREFIX + id;
@@ -116,6 +157,7 @@ public class StoreService {
                         Store store = new Store();
                         store.setStoreCode(id);
                         store.setStoreName((String) storeData.get("storeName"));
+                        store.setMainCategoryCode((String) storeData.get("mainCategoryCode"));
                         store.setMainCategoryName((String) storeData.get("mainCategoryName"));
                         store.setDoro((String) storeData.get("doro"));
                         store.setLat((String) storeData.get("lat"));

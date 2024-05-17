@@ -18,7 +18,7 @@
           FROM store
     </select>
 
-    <select id="findDongCodeByDongName" parameterType="AddressName" resultType="String">
+    <select id="findDongCodeByDongName" parameterType="com.ssafy.happyhouse.request.AddressName" resultType="String">
         SELECT dongCode
           FROM dongCode
          WHERE gugunName = #{gugunName} AND dongName = #{dongName}
