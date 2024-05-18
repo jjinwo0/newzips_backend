@@ -5,7 +5,7 @@
 
     <resultMap id="enteredRoom" type="com.ssafy.happyhouse.entity.chat.EnteredRoom">
         <id column="enteredRoom_id" property="enteredRoomId"/>
-        <association property="member" javaType="com.ssafy.happyhouse.entity.member.Member">
+        <association property="member" resultMap="member">
             <id column="members_id" property="id"/>
             <result column="username" property="username"/>
             <result column="email" property="email"/>
@@ -15,9 +15,26 @@
             <result column="nickname" property="nickname"/>
             <result column="member_type" property="memberType"/>
         </association>
-        <association property="room" javaType="com.ssafy.happyhouse.entity.chat.Room">
+        <association property="room" resultMap="room">
             <id column="room_id" property="roomId"/>
             <result column="name" property="name"/>
         </association>
     </resultMap>
+
+    <select id="findAll" resultMap="enteredRoom">
+        select *
+        from SSAFYHOME.ENTEREDROOM
+    </select>
+
+    <select id="findByMemberId" parameterType="long" resultMap="enteredRoom">
+        select *
+        from SSAFYHOME.ENTEREDROOM
+        where member_id=#{memberId}
+    </select>
+
+    <select id="findByRoomId" parameterType="long" resultMap="enteredRoom">
+        select *
+        from SSAFYHOME.ENTEREDROOM
+        where room_id=#{roomId}
+    </select>
 </mapper>

@@ -6,9 +6,9 @@
     <resultMap id="room" type="com.ssafy.happyhouse.entity.chat.Room">
         <id column="room_id" property="roomId"/>
         <result column="name" property="name"/>
-        <collection property="enteredRoom" ofType="com.ssafy.happyhouse.entity.chat.EnteredRoom">
+        <collection property="enteredRoom" resultMap="enteredRoom">
             <id column="enteredRoom_id" property="enteredRoomId"/>
-            <association property="member" javaType="com.ssafy.happyhouse.entity.member.Member">
+            <association property="member" resultMap="member">
                 <id column="member_id" property="id"/>
                 <result column="username" property="username"/>
                 <result column="email" property="email"/>
@@ -20,4 +20,9 @@
             </association>
         </collection>
     </resultMap>
+
+    <select id="findAll" resultMap="room">
+        select *
+        from SSAFYHOME.ROOM
+    </select>
 </mapper>

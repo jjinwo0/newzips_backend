@@ -12,9 +12,9 @@
         <result column="profile" property="profile"/>
         <result column="nickname" property="nickname"/>
         <result column="member_type" property="memberType"/>
-        <collection property="enteredRoom" ofType="com.ssafy.happyhouse.entity.chat.EnteredRoom">
+        <collection property="enteredRoom" resultMap="enteredRoom">
             <id column="enteredRoom_id" property="enteredRoomId"/>
-            <association property="room" javaType="com.ssafy.happyhouse.entity.chat.Room">
+            <association property="room" resultMap="room">
                 <id column="room_id" property="roomId"/>
                 <result column="name" property="name"/>
             </association>

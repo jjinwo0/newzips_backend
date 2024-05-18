@@ -1,4 +1,4 @@
-package com.ssafy.happyhouse.controller.member;
+package com.ssafy.happyhouse.controller.chat;
 
 import com.ssafy.happyhouse.entity.chat.Chat;
 import lombok.RequiredArgsConstructor;
