@@ -26,7 +26,7 @@ CREATE TABLE `ssafyhome`.`store` (
   `lat` TEXT NULL,
   PRIMARY KEY (`storeCode`));
 
--- 상권정보 데이터 가공
+-- 상권정보 데이터 가공 P1 : 교육, Q1 : 병원, I2 : 음식, R1 : 예술/스포츠
 DELETE FROM STORE
 WHERE mainCategoryCode NOT IN ('P1', 'Q1', 'I2', 'R1')
 
