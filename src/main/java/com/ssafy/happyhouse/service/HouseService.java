@@ -5,6 +5,7 @@ import com.ssafy.happyhouse.global.error.ErrorCode;
 import com.ssafy.happyhouse.global.error.exception.EntityNotFoundException;
 import com.ssafy.happyhouse.mapper.HouseMapper;
 import com.ssafy.happyhouse.request.AddressName;
+import com.ssafy.happyhouse.response.MapGugunMarkerInfo;
 import com.ssafy.happyhouse.response.MapMarkerInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -64,5 +65,14 @@ public class HouseService {
         List<MapMarkerInfo> apartListByAddressName = houseMapper.getApartListByAddressName(addressName);
 
         return apartListByAddressName;
+    }
+
+    /**
+     * 구군 5년치 평균 실거래가 정보
+     * @return
+     */
+    public List<MapGugunMarkerInfo> findGugunAvgDealAmount() {
+
+        return houseMapper.getGugunAvgDealAmount();
     }
 }

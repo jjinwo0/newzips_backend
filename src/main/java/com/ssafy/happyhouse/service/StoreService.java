@@ -32,6 +32,9 @@ public class StoreService {
     private static final String CATEGORY_KEY_PREFIX = "category:";
     private static final String DONG_CATEGORY_KEY_PREFIX = "dong:%s:category:%s";
 
+    /**
+     * 서비스 시작시 상가분석 데이터를 RDB 에서 Redis로 가져옴
+     */
     @PostConstruct
     public void init() {
         //loadDataFromMysqlToRedis();
@@ -48,7 +51,9 @@ public class StoreService {
         }));
     }
 
-    // 서비스 초기에 상권분석 데이터를 Redis에 넣는다.
+    /**
+     * Redis에 상가 분석 데이터를 set을 활용해 저장
+     */
     public void loadDataFromMysqlToRedis() {
         List<Store> stores = storeMapper.findALl();
 
@@ -62,6 +67,7 @@ public class StoreService {
             storeData.put("lat", store.getLat());
             storeData.put("lng", store.getLng());
 
+            // 상점 정보를 store id에 기반한 set에 저장 (store:상점ID, 상점정보)
             redisTemplate.opsForHash().putAll(STORE_KEY_PREFIX+store.getStoreCode(), storeData);
 
             // store Id를 동에 기반한 set에 저장 (dong:동코드, 상점ID)

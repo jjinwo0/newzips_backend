@@ -123,9 +123,21 @@
                 lat
           FROM RankedData
          WHERE rn = 1;
+    </select>
 
-
-
+    <select id="getGugunAvgDealAmount" resultType="MapGugunMarkerInfo">
+        -- getGugunAvgDealAmount 구/군의 5년치 평균 실거래가를 조회한다.
+        SELECT gugunName, avgDealAmount, lat, lng
+        FROM (
+                 SELECT (b.dongCode DIV 100000) AS dongcode,
+                        ROUND(AVG(CAST(REPLACE(a.dealAmount, ',', '') AS UNSIGNED)) / 10000 , 1)  AS avgDealAmount
+                 FROM housedeal a
+                          JOIN houseinfo b ON a.aptCode = b.aptCode
+                 WHERE a.dealYear > YEAR(CURDATE()) - 5
+                 GROUP BY b.dongCode DIV 100000
+            ) a
+            JOIN sigungucode b
+        ON (a.dongcode) *100000 = b.dongcode;
     </select>
 
 </mapper>

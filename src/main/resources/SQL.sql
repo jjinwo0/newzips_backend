@@ -29,3 +29,6 @@ CREATE TABLE `ssafyhome`.`store` (
 -- 상권정보 데이터 가공
 DELETE FROM STORE
 WHERE mainCategoryCode NOT IN ('P1', 'Q1', 'I2', 'R1')
+
+-- 아파트명 인덱스 생성
+ALTER TABLE houseinfo ADD FULLTEXT INDEX houseinfo_idx(apartmentName) WITH PARSER ngram;

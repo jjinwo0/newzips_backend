@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.controller.house;
 
 import com.ssafy.happyhouse.entity.house.HouseDeal;
 import com.ssafy.happyhouse.request.AddressName;
+import com.ssafy.happyhouse.response.MapGugunMarkerInfo;
 import com.ssafy.happyhouse.response.MapMarkerInfo;
 import com.ssafy.happyhouse.service.HouseService;
 import lombok.RequiredArgsConstructor;
@@ -79,5 +80,19 @@ public class HouseController {
 
         return ResponseEntity.ok(findDetail);
     }
+
+    /**
+     * 구군 5년치 평균 실거래가 정보
+     * @return
+     */
+    @GetMapping("/markers/gugun-avg-deal")
+    public ResponseEntity<?> findGugunAvgDealAmount() {
+        List<MapGugunMarkerInfo> findList = houseService.findGugunAvgDealAmount();
+        if(findList.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(findList);
+    }
+
 
 }

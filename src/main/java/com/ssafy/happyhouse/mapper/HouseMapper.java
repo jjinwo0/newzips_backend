@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.mapper;
 
 import com.ssafy.happyhouse.entity.house.HouseDeal;
 import com.ssafy.happyhouse.request.AddressName;
+import com.ssafy.happyhouse.response.MapGugunMarkerInfo;
 import com.ssafy.happyhouse.response.MapMarkerInfo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,4 +26,7 @@ public interface HouseMapper {
 
     // 주소를 기반으로 모든 아파트 정보를 조회
     List<MapMarkerInfo> getApartListByAddressName(AddressName addressName);
+
+    // 구군 5년치 평균 실거래가 정보
+    List<MapGugunMarkerInfo> getGugunAvgDealAmount();
 }
