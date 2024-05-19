@@ -14,4 +14,8 @@ public interface EnteredRoomMapper {
     List<Map<String, Object>> findByMemberId(Long memberId);
 
     List<EnteredRoom> findByRoomId(Long roomId);
+
+    void createChatRoom(Map<String, Object> input);
+
+    void deleteById(Long enteredRoomId);
 }

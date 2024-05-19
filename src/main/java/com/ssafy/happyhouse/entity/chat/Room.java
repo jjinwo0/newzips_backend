@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ public class Room {
     private Long id;
 
     private String name;
+
+    private Integer price;
 
     private List<EnteredRoom> enteredRooms = new ArrayList<>();
 

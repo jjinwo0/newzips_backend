@@ -5,6 +5,8 @@
 
     <resultMap id="enteredRoom" type="com.ssafy.happyhouse.entity.chat.EnteredRoom">
         <id column="enteredroom_id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="entired_time" property="entiredTime"/>
 
         <association property="member" javaType="com.ssafy.happyhouse.entity.member.Member">
             <id column="member_id" property="id"/>
@@ -24,7 +26,7 @@
     </resultMap>
 
     <select id="findAll" resultMap="enteredRoom">
-        SELECT er.enteredroom_id, er.member_id, er.room_id,
+        SELECT er.enteredroom_id, er.member_id, er.room_id, er.status, er.entired_time,
                m.username, m.email, m.password, m.role, m.profile, m.nickname, m.member_type,
                r.name
         FROM SSAFYHOME.ENTEREDROOM er
@@ -33,7 +35,7 @@
     </select>
 
     <select id="findByMemberId" parameterType="long" resultType="map">
-        SELECT er.enteredroom_id, er.member_id, er.room_id,
+        SELECT er.enteredroom_id, er.member_id, er.room_id, er.status, er.entired_time,
                m.username, m.email, m.password, m.role, m.profile, m.nickname, m.member_type,
                r.name
         FROM SSAFYHOME.ENTEREDROOM er
@@ -43,7 +45,7 @@
     </select>
 
     <select id="findByRoomId" parameterType="long" resultMap="enteredRoom">
-        SELECT er.enteredroom_id, er.member_id, er.room_id,
+        SELECT er.enteredroom_id, er.member_id, er.room_id, er.status, er.entired_time,
                m.username, m.email, m.password, m.role, m.profile, m.nickname, m.member_type,
                r.name
         FROM SSAFYHOME.ENTEREDROOM er
@@ -51,5 +53,15 @@
                  LEFT JOIN SSAFYHOME.ROOM r ON er.room_id = r.room_id
         WHERE er.room_id = #{roomId}
     </select>
+
+    <insert id="createChatRoom" parameterType="map">
+        INSERT INTO SSAFYHOME.ENTEREDROOM (room_id, member_id, status, entired_time)
+        VALUES (#{roomId}, #{memberId}, #{status}, DATE_ADD(NOW(), INTERVAL 30 MINUTE))
+    </insert>
+
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM SSAFYHOME.ENTEREDROOM
+        WHERE enteredroom_id=#{enteredRoomId}
+    </delete>
 
 </mapper>

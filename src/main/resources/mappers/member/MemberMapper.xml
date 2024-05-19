@@ -15,6 +15,8 @@
 
         <collection property="enteredRoom" javaType="list" ofType="com.ssafy.happyhouse.entity.chat.EnteredRoom">
             <id column="enteredroom_id" property="id"/>
+            <result column="status" property="status"/>
+            <result column="entired_time" property="entiredTime"/>
 
             <association property="room" javaType="com.ssafy.happyhouse.entity.chat.Room">
                 <id column="room_id" property="id"/>
