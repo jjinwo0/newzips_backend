@@ -1,6 +1,5 @@
 package com.ssafy.happyhouse.controller.chat;
 
-import com.ssafy.happyhouse.entity.chat.EnteredRoom;
 import com.ssafy.happyhouse.entity.chat.Room;
 import com.ssafy.happyhouse.service.chat.EnteredRoomService;
 import com.ssafy.happyhouse.service.chat.RoomService;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/chat/room")
@@ -28,7 +28,7 @@ public class RoomController {
     }
 
     @GetMapping("/joined/{memberId}")
-    public ResponseEntity<List<EnteredRoom>> joinList(@PathVariable("memberId") Long memberId){
+    public ResponseEntity<List<Map<String, Object>>> joinList(@PathVariable("memberId") Long memberId){
 
         return ResponseEntity.ok(enteredRoomService.findByMemberId(memberId));
     }

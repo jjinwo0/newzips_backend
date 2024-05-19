@@ -12,10 +12,12 @@
         <result column="profile" property="profile"/>
         <result column="nickname" property="nickname"/>
         <result column="member_type" property="memberType"/>
-        <collection property="enteredRoom" resultMap="enteredRoom">
-            <id column="enteredRoom_id" property="enteredRoomId"/>
-            <association property="room" resultMap="room">
-                <id column="room_id" property="roomId"/>
+
+        <collection property="enteredRoom" javaType="list" ofType="com.ssafy.happyhouse.entity.chat.EnteredRoom">
+            <id column="enteredroom_id" property="id"/>
+
+            <association property="room" javaType="com.ssafy.happyhouse.entity.chat.Room">
+                <id column="room_id" property="id"/>
                 <result column="name" property="name"/>
             </association>
         </collection>
@@ -30,7 +32,7 @@
 
     <select id="findById" parameterType="long" resultType="member">
 		<![CDATA[
-        SELECT id,
+        SELECT member_id as id,
                username,
                email,
                password,
@@ -41,13 +43,13 @@
                refresh_token as refreshToken,
                refresh_token_expiration_time as tokenExpirationTime
         FROM SSAFYHOME.MEMBERS
-        WHERE id=#{id}
+        WHERE member_id=#{id}
         ]]>
     </select>
 
     <select id="findByUsernameAndPassword" parameterType="map" resultType="member">
 		<![CDATA[
-        SELECT id,
+        SELECT member_id as id,
                username,
                email,
                password,
@@ -80,14 +82,14 @@
 		<![CDATA[
         UPDATE SSAFYHOME.MEMBERS
         set username=#{username}, password=#{password}, email=#{email}
-        where id=#{id}
+        where member_id=#{id}
         ]]>
     </update>
 
     <delete id="delete" parameterType="long">
 		<![CDATA[
         delete from SSAFYHOME.MEMBERS
-        where id=#{id}
+        where member_id=#{id}
         ]]>
     </delete>
 
@@ -119,7 +121,7 @@
 		<![CDATA[
         UPDATE SSAFYHOME.MEMBERS
         SET refresh_token=#{refreshToken}, refresh_token_expiration_time=#{refreshTokenExpireTime}
-        WHERE id=#{id}
+        WHERE member_id=#{id}
         ]]>
     </update>
 
@@ -127,7 +129,7 @@
 		<![CDATA[
         UPDATE SSAFYHOME.MEMBERS
         SET refresh_token_expiration_time=#{now}
-        WHERE id=#{id}
+        WHERE member_id=#{id}
         ]]>
     </update>
 </mapper>

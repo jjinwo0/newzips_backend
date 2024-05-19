@@ -4,9 +4,10 @@
 <mapper namespace="com.ssafy.happyhouse.mapper.EnteredRoomMapper">
 
     <resultMap id="enteredRoom" type="com.ssafy.happyhouse.entity.chat.EnteredRoom">
-        <id column="enteredRoom_id" property="enteredRoomId"/>
-        <association property="member" resultMap="member">
-            <id column="members_id" property="id"/>
+        <id column="enteredroom_id" property="id"/>
+
+        <association property="member" javaType="com.ssafy.happyhouse.entity.member.Member">
+            <id column="member_id" property="id"/>
             <result column="username" property="username"/>
             <result column="email" property="email"/>
             <result column="password" property="password"/>
@@ -15,26 +16,40 @@
             <result column="nickname" property="nickname"/>
             <result column="member_type" property="memberType"/>
         </association>
-        <association property="room" resultMap="room">
-            <id column="room_id" property="roomId"/>
+
+        <association property="room" javaType="com.ssafy.happyhouse.entity.chat.Room">
+            <id column="room_id" property="id"/>
             <result column="name" property="name"/>
         </association>
     </resultMap>
 
     <select id="findAll" resultMap="enteredRoom">
-        select *
-        from SSAFYHOME.ENTEREDROOM
+        SELECT er.enteredroom_id, er.member_id, er.room_id,
+               m.username, m.email, m.password, m.role, m.profile, m.nickname, m.member_type,
+               r.name
+        FROM SSAFYHOME.ENTEREDROOM er
+                 LEFT JOIN SSAFYHOME.MEMBERS m ON er.member_id = m.member_id
+                 LEFT JOIN SSAFYHOME.ROOM r ON er.room_id = r.room_id
     </select>
 
-    <select id="findByMemberId" parameterType="long" resultMap="enteredRoom">
-        select *
-        from SSAFYHOME.ENTEREDROOM
-        where member_id=#{memberId}
+    <select id="findByMemberId" parameterType="long" resultType="map">
+        SELECT er.enteredroom_id, er.member_id, er.room_id,
+               m.username, m.email, m.password, m.role, m.profile, m.nickname, m.member_type,
+               r.name
+        FROM SSAFYHOME.ENTEREDROOM er
+                 LEFT JOIN SSAFYHOME.MEMBERS m ON er.member_id = m.member_id
+                 LEFT JOIN SSAFYHOME.ROOM r ON er.room_id = r.room_id
+        WHERE er.member_id = #{memberId}
     </select>
 
     <select id="findByRoomId" parameterType="long" resultMap="enteredRoom">
-        select *
-        from SSAFYHOME.ENTEREDROOM
-        where room_id=#{roomId}
+        SELECT er.enteredroom_id, er.member_id, er.room_id,
+               m.username, m.email, m.password, m.role, m.profile, m.nickname, m.member_type,
+               r.name
+        FROM SSAFYHOME.ENTEREDROOM er
+                 LEFT JOIN SSAFYHOME.MEMBERS m ON er.member_id = m.member_id
+                 LEFT JOIN SSAFYHOME.ROOM r ON er.room_id = r.room_id
+        WHERE er.room_id = #{roomId}
     </select>
+
 </mapper>

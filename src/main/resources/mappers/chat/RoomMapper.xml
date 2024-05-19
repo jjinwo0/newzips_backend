@@ -4,11 +4,13 @@
 <mapper namespace="com.ssafy.happyhouse.mapper.RoomMapper">
 
     <resultMap id="room" type="com.ssafy.happyhouse.entity.chat.Room">
-        <id column="room_id" property="roomId"/>
+        <id column="room_id" property="id"/>
         <result column="name" property="name"/>
-        <collection property="enteredRoom" resultMap="enteredRoom">
-            <id column="enteredRoom_id" property="enteredRoomId"/>
-            <association property="member" resultMap="member">
+
+        <collection property="enteredRoom" javaType="list" ofType="com.ssafy.happyhouse.entity.chat.EnteredRoom">
+            <id column="enteredroom_id" property="id"/>
+
+            <association property="member" javaType="com.ssafy.happyhouse.entity.member.Member">
                 <id column="member_id" property="id"/>
                 <result column="username" property="username"/>
                 <result column="email" property="email"/>
@@ -22,7 +24,10 @@
     </resultMap>
 
     <select id="findAll" resultMap="room">
-        select *
-        from SSAFYHOME.ROOM
+        SELECT r.*, er.*, m.*
+        FROM SSAFYHOME.ROOM r
+                 LEFT JOIN SSAFYHOME.ENTEREDROOM er ON r.room_id = er.room_id
+                 LEFT JOIN SSAFYHOME.MEMBERS m ON er.member_id = m.member_id
     </select>
+
 </mapper>
