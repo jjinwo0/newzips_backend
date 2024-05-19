@@ -110,12 +110,19 @@
 			<version>3.2.5</version>
 		</dependency>
 
-
-		<!-- -->
+		<!-- Redis -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+
+		<!-- jsoup 크롤링 -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.17.2</version>
+		</dependency>
+
 
 	</dependencies>
 
