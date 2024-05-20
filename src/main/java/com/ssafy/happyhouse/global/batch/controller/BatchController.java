@@ -19,6 +19,7 @@ public class BatchController {
 
     // 매일 오전 7시에 실행
     @Scheduled(cron = "0 0 7 * * ?")
+    //@Scheduled(fixedDelay = 5000)
     public void getRelatedNews() throws Exception {
         batchService.crawlingNews();
         log.info("============================ 뉴스 크롤링 완료");

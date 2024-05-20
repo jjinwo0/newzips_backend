@@ -25,8 +25,6 @@ public class NewsCrawling {
 
         Elements newsItems = doc.select(".group_news ul.list_news li.bx");
 
-
-
         // 상위 5개 연관 뉴스를 가져온다.
         for(Element newsItem : newsItems) {
             if(news.size() == 5) break;

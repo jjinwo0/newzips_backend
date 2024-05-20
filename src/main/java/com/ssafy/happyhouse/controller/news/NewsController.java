@@ -19,8 +19,13 @@ public class NewsController {
 
     private final NewsService newsService;
 
+    /**
+     * 당일 크롤링된 뉴스를 조회
+     * @return
+     * @throws IOException
+     */
     @GetMapping("/related")
-    public ResponseEntity<?> getRelatedNews() throws IOException {
+    public ResponseEntity<?> getRelatedNews() {
         List<News> news = newsService.getRelatedNews();
 
         if(news.isEmpty())
@@ -28,6 +33,12 @@ public class NewsController {
 
         return ResponseEntity.ok(news);
 
+    }
+
+    @GetMapping("/summarize-today")
+    public ResponseEntity<?> getNewsSummary() {
+        List<String> answer = newsService.getNewsSummary();
+        return ResponseEntity.ok(answer);
     }
 
 
