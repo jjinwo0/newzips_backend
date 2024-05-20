@@ -55,11 +55,15 @@ public class KakaoTokenController {
         KakaoTokenDto.Response kakaoResponse = kakaoTokenClient.requestKakaoToken(contentType, kakaoTokenRequestDto);
         String accessToken = kakaoResponse.getAccess_token();
         String refreshToken = kakaoResponse.getRefresh_token();
+        Integer accessTokenExpireTime = kakaoResponse.getExpires_in();
+        Integer refreshTokenExpireTime = kakaoResponse.getRefresh_token_expires_in();
 
         String redirectUri = UriComponentsBuilder
                 .fromUriString("http://localhost:5173/oauth/success")
                 .queryParam("accessToken", accessToken)
                 .queryParam("refreshToken", refreshToken)
+                .queryParam("accessTokenExpireTime", accessTokenExpireTime)
+                .queryParam("refreshTokenExpireTime", refreshTokenExpireTime)
                 .build().toUriString();
 
         response.sendRedirect(redirectUri);

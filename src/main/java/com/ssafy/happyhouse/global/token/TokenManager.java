@@ -44,6 +44,33 @@ public class TokenManager {
                 .build();
     }
 
+    public JwtTokenDto createJwtTokenDtoByOauth(Long id, String username, Role role, String nickname, String memberType, String profile, String accessToken, String accessTokenExpirationTime, String refreshToken, String refreshTokenExpirationTime){
+
+        Date currentTime = new Date();
+
+        // accessTokenExpireTime과 refreshTokenExpireTime을 Integer로 변환
+        int accessTokenExpireTimeInt = Integer.parseInt(accessTokenExpirationTime);
+        int refreshTokenExpireTimeInt = Integer.parseInt(refreshTokenExpirationTime);
+
+        // 현재 시간에 만료 시간(밀리초)을 더하여 만료 시간 계산
+        Date accessTokenExpiryDate = new Date(currentTime.getTime() + accessTokenExpireTimeInt);
+        Date refreshTokenExpiryDate = new Date(currentTime.getTime() + refreshTokenExpireTimeInt);
+
+        return JwtTokenDto.builder()
+                .id(id)
+                .username(username)
+                .role(role)
+                .nickname(nickname)
+                .memberType(memberType)
+                .profile(profile)
+                .grantType(GrantType.BEARER.getType())
+                .accessToken(accessToken)
+                .accessTokenExpireTime(accessTokenExpiryDate)
+                .refreshToken(refreshToken)
+                .refreshTokenExpireTime(refreshTokenExpiryDate)
+                .build();
+    }
+
     public Date createAccessTokenExpireTime() {
         // 현재시간 + 15min
         return new Date(System.currentTimeMillis() + Long.parseLong(accessTokenExpirationTime));

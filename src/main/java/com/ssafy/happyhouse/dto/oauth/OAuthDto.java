@@ -17,6 +17,14 @@ public class OAuthDto {
     public static class Request {
 
         private String memberType;
+
+        private String accessToken;
+
+        private String refreshToken;
+
+        private String accessTokenExpireTime;
+
+        private String refreshTokenExpireTime;
     }
 
     @Data

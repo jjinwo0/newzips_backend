@@ -114,6 +114,7 @@ public class MemberService {
     @Transactional
     public void joinByEntity(Member member){
 
+        log.info("Join Member Id : {}", member.getId());
         log.info("Join Member Username : {}", member.getUsername());
         log.info("Join Member Email : {}", member.getEmail());
         log.info("Join Member Password : {}", member.getPassword());
@@ -121,7 +122,7 @@ public class MemberService {
         log.info("Join Member Type : {}", member.getMemberType());
         log.info("Join Member NickName : {}", member.getNickname());
 
-        memberMapper.join(member);
+        memberMapper.oauthJoin(member);
     }
 
     @Transactional

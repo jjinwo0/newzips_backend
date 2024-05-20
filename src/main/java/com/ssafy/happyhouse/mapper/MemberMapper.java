@@ -22,6 +22,8 @@ public interface MemberMapper {
 
     void join(Member member);
 
+    void oauthJoin(Member member);
+
     void update(Map<String, Object> map);
 
     void delete(Long id);

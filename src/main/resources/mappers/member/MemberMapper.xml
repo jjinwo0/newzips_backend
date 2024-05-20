@@ -72,6 +72,19 @@
         ]]>
     </insert>
 
+    <insert id="oauthJoin" parameterType="member">
+		<![CDATA[
+        INSERT INTO SSAFYHOME.MEMBERS (username, email, password, role, member_type, nickname, profile)
+        VALUES (#{username},
+                #{email},
+                #{password},
+                #{role, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.RoleTypeHandler},
+                #{memberType, jdbcType=VARCHAR, typeHandler=com.ssafy.happyhouse.global.handler.MemberTypeHandler},
+                #{nickname},
+                #{profile})
+        ]]>
+    </insert>
+
     <update id="update" parameterType="map">
 		<![CDATA[
         UPDATE SSAFYHOME.MEMBERS

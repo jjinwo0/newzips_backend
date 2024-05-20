@@ -9,6 +9,7 @@ import com.ssafy.happyhouse.service.oauth.OAuthLoginService;
 import com.ssafy.happyhouse.service.oauth.OAuthValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/member/oauth")
 @RequiredArgsConstructor
@@ -28,6 +30,8 @@ public class OAuthLoginController {
     @PostMapping("/kakao/login")
     public ResponseEntity<OAuthDto.Response> oauthLogin(@RequestBody OAuthDto.Request dto,
                                                HttpServletRequest httpServletRequest) {
+
+        log.info("dto toString :: {}", dto.toString());
 
         String authorization = httpServletRequest.getHeader("Authorization");
 
@@ -43,7 +47,7 @@ public class OAuthLoginController {
 
         String accessToken = authorization.split(" ")[1];
 
-        OAuthDto.Response token = oAuthLoginService.oauthLogin(accessToken, MemberType.from(dto.getMemberType()));
+        OAuthDto.Response token = oAuthLoginService.oauthLogin(dto, accessToken, MemberType.from(dto.getMemberType()));
 
         return ResponseEntity.ok(token);
     }

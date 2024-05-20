@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Map;
+
 @Slf4j
 @Service
 @Transactional(readOnly = true)
@@ -51,6 +53,10 @@ public class KakaoLoginService implements SocialLoginApiService{
 
         log.info("accessToken: {}", accessToken);
 
-        return client.logoutKakaoUser(CONTENT_TYPE, GrantType.BEARER.getType() + " " + accessToken);
+        Map<String, Object> response = client.logoutKakaoUser(CONTENT_TYPE, GrantType.BEARER.getType() + " " + accessToken);
+        log.info("Logout response: {}", response);
+
+        // 필요한 값 추출 및 반환 (예: 응답에서 상태 코드 또는 특정 값을 추출하여 반환)
+        return response != null ? 1L : 0L;
     }
 }

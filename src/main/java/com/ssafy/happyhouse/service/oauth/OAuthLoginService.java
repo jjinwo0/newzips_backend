@@ -25,7 +25,7 @@ public class OAuthLoginService {
     private final TokenManager tokenManager;
 
     @Transactional
-    public OAuthDto.Response oauthLogin(String accessToken, MemberType memberType) {
+    public OAuthDto.Response oauthLogin(OAuthDto.Request dto, String accessToken, MemberType memberType) {
 
         log.info("memberType check: {}", memberType.getMemberType());
 
@@ -34,6 +34,9 @@ public class OAuthLoginService {
         OAuthAttributes userInfo = socialLoginService.getUserInfo(accessToken);
 
         log.info("userInfo : {}", userInfo);
+        log.info("accessToken : {}", accessToken);
+        log.info("accessToken : {}", dto.getAccessToken());
+        log.info("expireTime : {}", dto.getAccessTokenExpireTime());
 
         JwtTokenDto tokenDto;
 
@@ -46,11 +49,35 @@ public class OAuthLoginService {
 
             memberService.joinByEntity(oauthMember);
 
-            tokenDto = tokenManager.createJwtTokenDto(oauthMember.getId(), oauthMember.getUsername(), oauthMember.getRole(), oauthMember.getNickname(), oauthMember.getMemberType().getMemberType(), oauthMember.getProfile());
+            tokenDto = tokenManager.createJwtTokenDtoByOauth(
+                    oauthMember.getId(),
+                    oauthMember.getUsername(),
+                    oauthMember.getRole(),
+                    oauthMember.getNickname(),
+                    oauthMember.getMemberType().getMemberType(),
+                    oauthMember.getProfile(),
+                    dto.getAccessToken(),
+                    dto.getAccessTokenExpireTime(),
+                    dto.getRefreshToken(),
+                    dto.getRefreshTokenExpireTime()
+            );
+
             memberService.updateToken(oauthMember.getId(), tokenDto);
         } else { // 기존 회원
 
-            tokenDto = tokenManager.createJwtTokenDto(findMember.getId(), findMember.getUsername(), findMember.getRole(), findMember.getNickname(), findMember.getMemberType().getMemberType(), findMember.getProfile());
+            tokenDto = tokenManager.createJwtTokenDtoByOauth(
+                    findMember.getId(),
+                    findMember.getUsername(),
+                    findMember.getRole(),
+                    findMember.getNickname(),
+                    findMember.getMemberType().getMemberType(),
+                    findMember.getProfile(),
+                    dto.getAccessToken(),
+                    dto.getAccessTokenExpireTime(),
+                    dto.getRefreshToken(),
+                    dto.getRefreshTokenExpireTime()
+            );
+
             memberService.updateToken(findMember.getId(), tokenDto);
         }
 
