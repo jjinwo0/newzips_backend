@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor @AllArgsConstructor
 public class EnteredRoom {
@@ -15,6 +17,10 @@ public class EnteredRoom {
     private Member member;
 
     private Room room;
+
+    private Status status;
+
+    private LocalDateTime entiredTime;
 
     @Builder
     public EnteredRoom(Member member, Room room) {

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(readOnly = true)
@@ -15,8 +16,13 @@ public class RoomService {
 
     private final RoomMapper roomMapper;
 
-    public List<Room> findAll() {
+    public List<Map<String, Object>> findAll() {
 
         return roomMapper.findAll();
+    }
+
+    public Map<String, Object> findById(Long roomId) {
+
+        return roomMapper.findById(roomId);
     }
 }
