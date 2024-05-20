@@ -40,7 +40,7 @@ public class OAuthLoginService {
 
         JwtTokenDto tokenDto;
 
-        Member findMember = memberService.findById(userInfo.getId());
+        Member findMember = memberService.findByEmail(userInfo.getEmail());
 
         // 신규 회원
         if (findMember == null) {

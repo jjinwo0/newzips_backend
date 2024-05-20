@@ -11,6 +11,7 @@ import com.ssafy.happyhouse.global.token.JwtTokenDto;
 import com.ssafy.happyhouse.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -36,9 +38,14 @@ public class MemberService {
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_USERNAME);
     }
 
+    public Member findByUsername(String username) {
+
+        return memberMapper.findByUsername(username);
+    }
+
     public void validEmail(String email){
 
-        Member findByEmail = memberMapper.findByEmail(email);
+        Member findByEmail = memberMapper.findByEmail(email).get();
 
         if (findByEmail != null)
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_USERNAME);
@@ -78,12 +85,13 @@ public class MemberService {
 
     public Member findByEmail(String email){
 
-        Member findMember = memberMapper.findByEmail(email);
-
-//        if (findMember == null)
-//            throw new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS);
-
-        return findMember;
+        try {
+            return memberMapper.findByEmail(email).orElse(null);
+        } catch (MyBatisSystemException e) {
+            // 로그 등을 남기고 null 반환
+            System.err.println("MyBatisSystemException 발생: " + e.getMessage());
+            return null;
+        }
     }
 
     public List<Member> findExpertList() {
