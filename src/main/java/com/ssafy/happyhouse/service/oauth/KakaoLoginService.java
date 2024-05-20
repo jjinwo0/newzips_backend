@@ -45,4 +45,12 @@ public class KakaoLoginService implements SocialLoginApiService{
                 .memberType(MemberType.KAKAO)
                 .build();
     }
+
+    @Override
+    public Long logoutUser(String accessToken) {
+
+        log.info("accessToken: {}", accessToken);
+
+        return client.logoutKakaoUser(CONTENT_TYPE, GrantType.BEARER.getType() + " " + accessToken);
+    }
 }

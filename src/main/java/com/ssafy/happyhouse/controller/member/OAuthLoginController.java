@@ -47,4 +47,24 @@ public class OAuthLoginController {
 
         return ResponseEntity.ok(token);
     }
+
+    @PostMapping("/kakao/logout")
+    public ResponseEntity<?> oauthLogout(HttpServletRequest httpServletRequest) {
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+
+        if (!StringUtils.hasText(authorization))
+            throw new AuthenticationException(ErrorCode.NOT_EXISTS_AUTHORIZATION);
+
+        String[] splitHeader = authorization.split(" ");
+
+        if (splitHeader.length < 2 || (!GrantType.BEARER.getType().equals(splitHeader[0])))
+            throw new AuthenticationException(ErrorCode.NOT_VALID_BEARER_GRANT_TYPE);
+
+        String accessToken = authorization.split(" ")[1];
+
+        Long logoutId = oAuthLoginService.oauthLogout(accessToken, MemberType.KAKAO);
+
+        return ResponseEntity.ok(logoutId);
+    }
 }

@@ -5,6 +5,8 @@ import com.ssafy.happyhouse.dto.oauth.OAuthDto;
 import com.ssafy.happyhouse.entity.member.Member;
 import com.ssafy.happyhouse.entity.member.constant.MemberType;
 import com.ssafy.happyhouse.entity.member.constant.Role;
+import com.ssafy.happyhouse.global.error.ErrorCode;
+import com.ssafy.happyhouse.global.error.exception.AuthenticationException;
 import com.ssafy.happyhouse.global.token.JwtTokenDto;
 import com.ssafy.happyhouse.global.token.TokenManager;
 import com.ssafy.happyhouse.service.MemberService;
@@ -53,5 +55,18 @@ public class OAuthLoginService {
         }
 
         return OAuthDto.Response.of(tokenDto);
+    }
+
+    @Transactional
+    public Long oauthLogout(String accessToken, MemberType memberType) {
+
+        SocialLoginApiService socialLoginService = SocialLoginApiServiceFactory.getSocialLoginService(memberType);
+
+        Long logoutId = socialLoginService.logoutUser(accessToken);
+
+        if (logoutId == null)
+            throw new AuthenticationException(ErrorCode.NOT_VALID_TOKEN);
+
+        return logoutId;
     }
 }
