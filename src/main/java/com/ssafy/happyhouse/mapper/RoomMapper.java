@@ -9,7 +9,13 @@ import java.util.Map;
 @Mapper
 public interface RoomMapper {
 
-    List<Map<String, Object>> findAll();
-
     Map<String, Object> findById(Long roomId);
+
+    List<Map<String, Object>> findByMemberId(Long memberId);
+
+    List<Map<String, Object>> findByExpertId(Long expertId);
+
+    void createRoom(Map<String, Object> map);
+
+    void deleteRoom(Long roomId);
 }

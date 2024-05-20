@@ -18,6 +18,8 @@ public interface MemberMapper {
 
     Member findByUsernameAndPassword(Map<String, String> map);
 
+    List<Member> findExpertList();
+
     void join(Member member);
 
     void update(Map<String, Object> map);

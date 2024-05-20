@@ -86,6 +86,11 @@ public class MemberService {
         return findMember;
     }
 
+    public List<Member> findExpertList() {
+
+        return memberMapper.findExpertList();
+    }
+
     @Transactional
     public void join(MemberDto.Join dto){
 

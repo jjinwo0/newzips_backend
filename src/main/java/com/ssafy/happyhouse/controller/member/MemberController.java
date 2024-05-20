@@ -106,4 +106,10 @@ public class MemberController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/list/expert")
+    public ResponseEntity<?> listExpert(){
+
+        return ResponseEntity.ok(memberService.findExpertList());
+    }
 }

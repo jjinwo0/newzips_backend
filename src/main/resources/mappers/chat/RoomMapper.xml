@@ -5,36 +5,62 @@
 
     <resultMap id="room" type="com.ssafy.happyhouse.entity.chat.Room">
         <id column="room_id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="price" property="price"/>
+        <result column="status" property="status"/>
+        <result column="entired_time" property="entiredTime"/>
 
-        <collection property="enteredRoom" javaType="list" ofType="com.ssafy.happyhouse.entity.chat.EnteredRoom">
-            <id column="enteredroom_id" property="id"/>
-            <result column="status" property="status"/>
-            <result column="entired_time" property="entiredTime"/>
+        <association property="expert" javaType="com.ssafy.happyhouse.entity.member.Member">
+            <id column="member_id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="email" property="email"/>
+            <result column="password" property="password"/>
+            <result column="role" property="role"/>
+            <result column="profile" property="profile"/>
+            <result column="price" property="price"/>
+            <result column="nickname" property="nickname"/>
+            <result column="member_type" property="memberType"/>
+        </association>
 
-            <association property="member" javaType="com.ssafy.happyhouse.entity.member.Member">
-                <id column="member_id" property="id"/>
-                <result column="username" property="username"/>
-                <result column="email" property="email"/>
-                <result column="password" property="password"/>
-                <result column="role" property="role"/>
-                <result column="profile" property="profile"/>
-                <result column="nickname" property="nickname"/>
-                <result column="member_type" property="memberType"/>
-            </association>
-        </collection>
+        <association property="member" javaType="com.ssafy.happyhouse.entity.member.Member">
+            <id column="member_id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="email" property="email"/>
+            <result column="password" property="password"/>
+            <result column="role" property="role"/>
+            <result column="profile" property="profile"/>
+            <result column="price" property="price"/>
+            <result column="nickname" property="nickname"/>
+            <result column="member_type" property="memberType"/>
+        </association>
     </resultMap>
 
-    <select id="findAll" resultType="map">
-        SELECT room_id as roomId, name, price
-        FROM SSAFYHOME.ROOM
-    </select>
-
     <select id="findById" parameterType="long" resultType="map">
-        SELECT name, price
+        SELECT status, entired_time as entiredTime, member_id, expert_id
         FROM SSAFYHOME.ROOM
         WHERE room_id=#{roomId}
     </select>
+
+    <select id="findByMemberId" parameterType="long" resultType="map">
+        SELECT r.room_id, r.status, r.entired_time as entiredTime, r.member_id, r.expert_id, m.nickname as expertNickname
+        FROM SSAFYHOME.ROOM r
+                 JOIN SSAFYHOME.MEMBERS m ON r.expert_id = m.member_id
+        WHERE r.member_id=#{memberId}
+    </select>
+
+    <select id="findByExpertId" parameterType="long" resultType="map">
+        SELECT r.room_id, r.status, r.entired_time as entiredTime, r.member_id, r.expert_id, m.nickname as expertNickname
+        FROM SSAFYHOME.ROOM r
+                 JOIN SSAFYHOME.MEMBERS m ON r.expert_id = m.member_id
+        WHERE r.expert_id=#{memberId}
+    </select>
+
+    <insert id="createRoom" parameterType="map">
+        INSERT INTO SSAFYHOME.ROOM (status, entired_time, expert_id, member_id)
+        VALUES(#{status}, DATE_ADD(NOW(), INTERVAL 30 MINUTE), #{expertId}, #{memberId})
+    </insert>
+
+    <delete id="quitRoom" parameterType="long">
+        DELETE FROM SSAFYHOME.ROOM
+        WHERE room_id=#{roomId}
+    </delete>
 
 </mapper>

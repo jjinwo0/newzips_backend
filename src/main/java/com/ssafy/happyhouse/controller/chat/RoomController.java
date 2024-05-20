@@ -1,7 +1,5 @@
 package com.ssafy.happyhouse.controller.chat;
 
-import com.ssafy.happyhouse.entity.chat.Room;
-import com.ssafy.happyhouse.service.chat.EnteredRoomService;
 import com.ssafy.happyhouse.service.chat.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,33 +15,31 @@ public class RoomController {
 
     private final RoomService roomService;
 
-    private final EnteredRoomService enteredRoomService;
-
-    @GetMapping("/list")
-    public ResponseEntity<List<Map<String, Object>>> findRoomList() {
-
-        return ResponseEntity.ok(roomService.findAll());
-    }
-
     @GetMapping("/joined/{memberId}")
     public ResponseEntity<List<Map<String, Object>>> joinList(@PathVariable("memberId") Long memberId){
 
-        return ResponseEntity.ok(enteredRoomService.findByMemberId(memberId));
+        return ResponseEntity.ok(roomService.findByMemberId(memberId));
     }
 
-    @PostMapping("/init/{roomId}/{memberId}")
-    public ResponseEntity<?> initChatRoom(@PathVariable("roomId") Long roomId,
+    @GetMapping("/joined/expert/{expertId}")
+    public ResponseEntity<List<Map<String, Object>>> joinListByExpertId(@PathVariable("expertId") Long expertId){
+
+        return ResponseEntity.ok(roomService.findByExpertId(expertId));
+    }
+
+    @PostMapping("/init/{expertId}/{memberId}")
+    public ResponseEntity<?> initChatRoom(@PathVariable("expertId") Long expertId,
                                           @PathVariable("memberId") Long memberId){
 
-        enteredRoomService.createChatRoom(roomId, memberId);
+        roomService.createRoom(expertId, memberId);
 
         return ResponseEntity.ok(memberId);
     }
 
-    @DeleteMapping("/quit/{enteredRoomId}")
-    public ResponseEntity<?> quitChatRoom(@PathVariable("enteredRoomId") Long enteredRoomId){
+    @DeleteMapping("/quit/{roomId}")
+    public ResponseEntity<?> quitChatRoom(@PathVariable("roomId") Long roomId){
 
-        enteredRoomService.deleteById(enteredRoomId);
+        roomService.deleteRoom(roomId);
 
         return ResponseEntity.ok(true);
     }

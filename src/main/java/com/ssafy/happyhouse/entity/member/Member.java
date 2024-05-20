@@ -1,6 +1,5 @@
 package com.ssafy.happyhouse.entity.member;
 
-import com.ssafy.happyhouse.entity.chat.EnteredRoom;
 import com.ssafy.happyhouse.entity.member.constant.MemberType;
 import com.ssafy.happyhouse.entity.member.constant.Role;
 import com.ssafy.happyhouse.global.token.JwtTokenDto;
@@ -14,10 +13,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Getter
 @Validated
@@ -44,13 +39,13 @@ public class Member {
     @NotNull
     private String profile;
 
+    private Integer price;
+
     @NotNull
     private Role role;
 
     @NotNull
     private MemberType memberType;
-
-    private List<EnteredRoom> enteredRooms = new ArrayList<>();
 
     @Size(max = 500)
     private String refreshToken;
@@ -58,7 +53,7 @@ public class Member {
     private LocalDateTime tokenExpirationTime;
 
     @Builder
-    public Member(Long id, String username, String email, String password, String nickname, Role role, MemberType memberType, String profile) {
+    public Member(Long id, String username, String email, String password, String nickname, Role role, MemberType memberType, String profile, Integer price) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -67,5 +62,6 @@ public class Member {
         this.role = role;
         this.memberType = memberType;
         this.profile = profile;
+        this.price = price;
     }
 }
