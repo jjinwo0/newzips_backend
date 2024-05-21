@@ -4,10 +4,19 @@
 <mapper namespace="com.ssafy.happyhouse.mapper.NewsMapper">
 
     <select id="getRelatedNews" resultType="news">
-        SELECT id, newsDate, newsTitle, newsLink
+        -- 부동산 관련 뉴스를 조회
+        SELECT id, newsDate, newsTitle, newsLink, newsContent
           FROM news
          WHERE newsDate = curdate()
     </select>
 
+    <select id="getRecipients" resultType="String">
+        SELECT email from members where is_subscribed = 1;
+    </select>
+
+    <insert id="writeNewsLetter" parameterType="com.ssafy.happyhouse.entity.news.NewsLetter">
+        INSERT INTO newsLetter(recipients, title, content)
+        VALUES (#{recipients}, #{title}, #{content})
+    </insert>
 
 </mapper>

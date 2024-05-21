@@ -29,11 +29,19 @@ public class NewsCrawling {
         for(Element newsItem : newsItems) {
             if(news.size() == 5) break;
 
+            Element detailNewsElement = newsItem.selectFirst("div.news_info > div.info_group > a:last-child");
+            String detailNewsLink = detailNewsElement.attr("href");
+            Document detailNewsDoc = Jsoup.connect(detailNewsLink).get();
+            Element newsContent = detailNewsDoc.selectFirst("#dic_area");
+
             Element titleElement = newsItem.selectFirst("a.news_tit");
-            if (titleElement != null) {
+
+
+            if (titleElement != null && newsContent != null ) {
                 News newData = News.builder()
                         .newsTitle(titleElement.text())
                         .newsLink(titleElement.attr("href"))
+                        .newsContent(newsContent.text())
                         .build();
 
                 news.add(newData);

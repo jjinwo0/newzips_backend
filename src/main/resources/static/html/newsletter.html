@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content h3 {
+            color: #007bff;
+            font-size: 20px;
+        }
+        .content p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333333;
+        }
+        .highlights {
+            margin: 20px 0;
+        }
+        .highlights ul {
+            padding: 0;
+            list-style-type: none;
+        }
+        .highlights ul li {
+            background-color: #f1f1f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            color: #333333;
+        }
+        .footer {
+            background-color: #f1f1f1;
+            color: #666666;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>뉴집스 부동산 뉴스레터</h1>
+    </div>
+    <div class="content">
+        <h3>{{title}}</h3>
+        <p>{{content}}</p>
+        <div class="highlights">
+            <h3>여기까지 읽어주셔서 감사합니다.</h3>
+            <h3>부동산 뉴집스를 주변 분들에게도 공유해주시면</h3>
+            <h3> 감사드리겠습니다!</h3>
+        </div>
+    </div>
+    <div class="footer">
+        <p>Thank you for being with us!</p>
+        <p><a href="#">Unsubscribe</a> | <a href="#">Contact Us</a></p>
+    </div>
+</div>
+</body>
+</html>

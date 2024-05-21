@@ -13,4 +13,5 @@ public class News {
     private String newsDate;
     private String newsTitle;
     private String newsLink;
+    private String newsContent;
 }

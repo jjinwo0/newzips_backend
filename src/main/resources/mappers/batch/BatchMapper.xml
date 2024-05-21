@@ -4,12 +4,22 @@
 <mapper namespace="com.ssafy.happyhouse.global.batch.mapper.BatchMapper">
 
     <insert id="insertNews" parameterType="list">
-        INSERT INTO news (newsDate, newsTitle, newsLink)
+        INSERT INTO news (newsDate, newsTitle, newsLink, newsContent)
         VALUES
         <foreach item="item" index="index" collection="newsList" open="(" separator="),(" close=")">
-            CURDATE(), #{item.newsTitle}, #{item.newsLink}
+            CURDATE(), #{item.newsTitle}, #{item.newsLink}, #{item.newsContent}
         </foreach>
     </insert>
+
+    <select id="getNewsLetter" resultType="com.ssafy.happyhouse.entity.news.NewsLetter">
+        SELECT id, recipients, title, content, sendDate
+          FROM newsletter
+         WHERE isSend = 0
+    </select>
+
+    <update id="setNewsLetter" parameterType="int">
+        UPDATE newsletter SET isSend = 1 WHERE id = #{id}
+    </update>
 
 
 </mapper>
