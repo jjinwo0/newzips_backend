@@ -37,7 +37,7 @@ public class StoreService {
      */
     @PostConstruct
     public void init() {
-        //loadDataFromMysqlToRedis();
+//        loadDataFromMysqlToRedis();
     }
 
     @PreDestroy
