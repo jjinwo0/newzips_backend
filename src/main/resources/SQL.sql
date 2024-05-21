@@ -3,7 +3,7 @@
 use ssafyhome;
 
 -- csv파일 가져오는 방법
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gangjoo.csv'
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gwangjoo.csv'
 INTO TABLE store
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
