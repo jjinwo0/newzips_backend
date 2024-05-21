@@ -13,11 +13,35 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>happyhouse</name>
 	<description>Demo project for Spring Boot</description>
+
+	<repositories>
+		<repository>
+			<id>maven-central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+		<repository>
+			<id>spring-milestone</id>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>
+
 	<properties>
 		<java.version>17</java.version>
+		<spring-ai.version>0.8.1</spring-ai.version>
 		<snippetsDir>${project.build.directory}/generated-snippets</snippetsDir>
 		<springCloudVersion>2023.0.0</springCloudVersion>
 	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.ai</groupId>
+				<artifactId>spring-ai-bom</artifactId>
+				<version>${spring-ai.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -144,6 +168,14 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
