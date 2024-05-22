@@ -19,4 +19,22 @@
         VALUES (#{recipients}, #{title}, #{content})
     </insert>
 
+    <update id="unsubscribe" parameterType="String">
+        UPDATE SSAFYHOME.MEMBERS
+           SET is_subscribed=0
+         WHERE email=#{orgEmail}
+    </update>
+
+    <select id="checkSubscribe" resultType="int">
+        SELECT is_subscribed
+          FROM members
+         WHERE member_id = #{memberId}
+    </select>
+
+    <update id="updateIsSubscribe" >
+        UPDATE SSAFYHOME.MEMBERS
+        SET is_subscribed=1
+        WHERE member_id = #{memberId}
+    </update>
+
 </mapper>

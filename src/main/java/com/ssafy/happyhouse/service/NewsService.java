@@ -102,4 +102,24 @@ public class NewsService {
         newsMapper.writeNewsLetter(newsLetter);
 
     }
+
+    public void unsubscribe(String orgEmail) {
+        newsMapper.unsubscribe(orgEmail);
+    }
+
+    /**
+     * 구독 여부 확인
+     * @param memberId
+     */
+    public int checkSubscribe(Long memberId) {
+        return newsMapper.checkSubscribe(memberId);
+    }
+
+    /**
+     * 구독 갱신
+     * @param memberId
+     */
+    public void updateIssubscribe(Long memberId) {
+        newsMapper.updateIsSubscribe(memberId);
+    }
 }
