@@ -114,3 +114,15 @@ CREATE TABLE board (
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- 뉴스레터
+CREATE TABLE `newsletter` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `recipients` text,
+  `title` varchar(100) DEFAULT NULL,
+  `content` text,
+  `sendDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `isSend` tinyint DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+

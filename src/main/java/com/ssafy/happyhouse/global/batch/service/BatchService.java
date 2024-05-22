@@ -3,9 +3,11 @@ package com.ssafy.happyhouse.global.batch.service;
 import com.ssafy.happyhouse.entity.news.News;
 import com.ssafy.happyhouse.entity.news.NewsLetter;
 import com.ssafy.happyhouse.global.batch.mapper.BatchMapper;
+import com.ssafy.happyhouse.global.common.AESUtil;
 import com.ssafy.happyhouse.global.common.GoogleMail;
 import com.ssafy.happyhouse.global.crawling.NewsCrawling;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +50,8 @@ public class BatchService {
 
                     String[] recipients = newsLetter.getRecipients().split(",");
                     for(String recipient : recipients) {
+
+
                         googleMail.sendmail(recipient, newsLetter.getTitle(), newsLetter.getContent());
                     }
                 }

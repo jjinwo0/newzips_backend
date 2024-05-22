@@ -3,6 +3,8 @@ package com.ssafy.happyhouse.global.common;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.data.MutableDataSet;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +17,11 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 @Component
+@AllArgsConstructor
 public class GoogleMail {
+
+    @Autowired
+    private final AESUtil aesUtil;
 
         public void sendmail(String recipients, String title, String content) throws Exception {
 
@@ -55,6 +61,9 @@ public class GoogleMail {
             String[] recipientArr = recipients.split(",");
 
             for(String recipient : recipientArr) {
+
+                String encodedEmail = aesUtil.encrypt(recipient, aesUtil.getKeyFromSeed());
+
                 // 받는 사람의 메일주소
                 Address toAddr = new InternetAddress(recipient);
                 msg.addRecipient(Message.RecipientType.TO, toAddr);
@@ -70,6 +79,8 @@ public class GoogleMail {
 
                 htmlContent = htmlContent.replace("{{title}}", title);
                 htmlContent = htmlContent.replace("{{content}}", userContentHtml);
+                htmlContent = htmlContent.replace("{{recipient}}", recipient);
+                htmlContent = htmlContent.replace("{{encodedEmail}}" , encodedEmail);
 
                 // 메시지 본문의 내용과 형식, 캐릭터 셋 설정
                 msg.setContent(htmlContent, "text/html;charset=UTF-8");
@@ -79,7 +90,7 @@ public class GoogleMail {
             }
 
 
-        }//end of public void sendmail(String recipient, String certificationCode)----------------
+        }
 
 
 }
