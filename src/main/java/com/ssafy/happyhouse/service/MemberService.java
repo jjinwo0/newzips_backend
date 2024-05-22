@@ -104,7 +104,7 @@ public class MemberService {
     public void join(MemberDto.Join dto){
 
         validUsername(dto.getUsername());
-        validEmail(dto.getEmail());
+        //validEmail(dto.getEmail());
 
         Member joinMember = Member.builder()
                 .username(dto.getUsername())

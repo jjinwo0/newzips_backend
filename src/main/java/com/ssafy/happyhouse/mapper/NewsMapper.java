@@ -17,4 +17,13 @@ public interface NewsMapper {
 
     // 뉴스레터 저장
     void writeNewsLetter(NewsLetter newsLetter);
+
+    // 뉴스레터 구독 취소
+    void unsubscribe(String orgEmail);
+
+    // 구독 여부 조회
+    int checkSubscribe(Long memberId);
+
+    // 구독 갱신
+    void updateIsSubscribe(Long memberId);
 }
