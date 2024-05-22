@@ -32,15 +32,16 @@ public class MemberService {
 
     public void validUsername(String username){
 
-        Member findByUsername = memberMapper.findByUsername(username);
+        Optional<Member> findMember = memberMapper.findByUsername(username);
 
-        if (findByUsername != null)
+        if (findMember.isPresent())
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_USERNAME);
     }
 
     public Member findByUsername(String username) {
 
-        return memberMapper.findByUsername(username);
+        return memberMapper.findByUsername(username)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ALREADY_REGISTERED_USERNAME));
     }
 
     public void validEmail(String email){

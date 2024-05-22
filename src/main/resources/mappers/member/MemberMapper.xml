@@ -40,7 +40,7 @@
         ]]>
     </select>
 
-    <select id="findByUsername" parameterType="long" resultType="member">
+    <select id="findByUsername" parameterType="string" resultType="member">
 		<![CDATA[
         SELECT member_id as id,
                username,

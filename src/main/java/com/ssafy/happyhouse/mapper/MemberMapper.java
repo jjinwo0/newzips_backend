@@ -29,7 +29,7 @@ public interface MemberMapper {
 
     void delete(Long id);
 
-    Member findByUsername(String username);
+    Optional<Member> findByUsername(String username);
 
     Optional<Member> findByEmail(String email);
 
