@@ -52,8 +52,10 @@ public class Member {
 
     private LocalDateTime tokenExpirationTime;
 
+    private Boolean isSubscribed;
+
     @Builder
-    public Member(Long id, String username, String email, String password, String nickname, Role role, MemberType memberType, String profile, Integer price) {
+    public Member(Long id, String username, String email, String password, String nickname, Role role, MemberType memberType, String profile, Integer price, boolean isSubscribed) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -63,5 +65,6 @@ public class Member {
         this.memberType = memberType;
         this.profile = profile;
         this.price = price;
+        this.isSubscribed = isSubscribed;
     }
 }

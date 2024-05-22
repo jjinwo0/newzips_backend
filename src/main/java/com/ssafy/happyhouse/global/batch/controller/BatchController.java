@@ -25,8 +25,9 @@ public class BatchController {
         log.info("============================ 뉴스 크롤링 완료");
     }
 
+    // 5분마다 보내야할 이메일을 조회하여 전송한다
     @Scheduled(cron = "0 */5 * * * ?")
-    //@Scheduled(fixedDelay = 50000)
+    //    //@Scheduled(fixedDelay = 50000)
     public void sendEmail() throws Exception {
         batchService.sendEmail();
         log.info("============================ 이메일 전송 완료");

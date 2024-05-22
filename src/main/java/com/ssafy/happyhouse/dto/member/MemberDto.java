@@ -30,6 +30,16 @@ public class MemberDto {
         private String password;
 
         private String nickname;
+
+        private int isSubscribed;
+
+        public void setIsSubscribed(String isSubscribed) {
+            if(isSubscribed.equals("true")) this.isSubscribed = 1;
+            else this.isSubscribed = 1;
+        }
+
+
+
     }
 
     @Data @Builder
