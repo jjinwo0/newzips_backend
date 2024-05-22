@@ -46,9 +46,9 @@ public class MemberService {
 
     public void validEmail(String email){
 
-        Member findByEmail = memberMapper.findByEmail(email).get();
+        Optional<Member> findByEmail = memberMapper.findByEmail(email);
 
-        if (findByEmail != null)
+        if (findByEmail.isPresent())
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_USERNAME);
     }
 
