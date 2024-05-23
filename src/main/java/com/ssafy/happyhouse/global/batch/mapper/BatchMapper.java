@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.global.batch.mapper;
 
+import com.ssafy.happyhouse.entity.auction.Auction;
 import com.ssafy.happyhouse.entity.news.News;
 import com.ssafy.happyhouse.entity.news.NewsLetter;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,4 +18,13 @@ public interface BatchMapper {
 
     // 뉴스레터 보냈다고 설정
     void setNewsLetter(int id);
+
+    // 부동산 경매 정보를 크롤링
+    void insertAuctionsInfo(List<Auction> auctionList);
+
+    // 위도 경도 주소가 없는 경매 정보 조회
+    List<Auction> getAuctionInfo();
+
+    // 주소, 위도, 경도 업데이트
+    void updateAuctionInfo(Auction auction);
 }

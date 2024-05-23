@@ -1,23 +1,27 @@
 package com.ssafy.happyhouse.entity.auction;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Auction {
 
-    int id;
-    String court;
-    String usage;
-    String location;
-    String appraisalValue;
-    String minimumSalePrice;
-    String saleDate;
-    String status;
+    private int id;
+    private String court;
+    private String productUsage;
+    private String location;
+    private String appraisalValue;
+    private String minimumSalePrice;
+    private String saleDate;
+    private String status;
+    private String sido;
+    private String gugun;
+    private String dong;
+    private String dongCode;
+    private String lng;
+    private String lat;
 
 }

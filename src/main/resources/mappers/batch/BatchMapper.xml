@@ -21,5 +21,33 @@
         UPDATE newsletter SET isSend = 1 WHERE id = #{id}
     </update>
 
+    <insert id="insertAuctionsInfo" parameterType="list" >
+        INSERT INTO auctions (court, productUsage, location, appraisalValue, minimumSalePrice, saleDate, status)
+        VALUES
+        <foreach item="item" index="index" collection="auctionList" open="(" separator="),(" close=")">
+            #{item.court}, #{item.productUsage}, #{item.location}, #{item.appraisalValue}, #{item.minimumSalePrice}, #{item.saleDate}, #{item.status}
+        </foreach>
+    </insert>
+
+    <select id="getAuctionInfo" resultType="com.ssafy.happyhouse.entity.auction.Auction">
+        SELECT id, court, productUsage, location, appraisalValue, minimumSalePrice, saleDate, status
+          FROM auctions
+         WHERE lng IS NULL
+    </select>
+
+    <update id="updateAuctionInfo">
+
+        UPDATE auctions
+        <set>
+            <if test="sido != null">sido = #{sido},</if>
+            <if test="gugun != null">gugun = #{gugun},</if>
+            <if test="dong != null">dong = #{dong},</if>
+            <if test="lng != null">lng = #{lng},</if>
+            <if test="lat != null">lat = #{lat}</if>
+        </set>
+        WHERE id = #{id}
+
+    </update>
+
 
 </mapper>

@@ -33,6 +33,19 @@ public class BatchController {
         log.info("============================ 이메일 전송 완료");
     }
 
+    // 매일 오후 5시에 실행
+    //@Scheduled(cron = "0 0 17 * * ?")
+    //@Scheduled(fixedDelay = 50000)
+    public void crawlingAuctionsInfo() throws Exception {
+        batchService.crawlingAuctionsInfo();
+        log.info("====================== 부동산 경매 정보 크롤링 완료");
+    }
+
+    //@Scheduled(fixedDelay = 50000)
+    public void setAuctionInfo() throws Exception {
+        batchService.setAuctionInfo();
+    }
+
 
 
 }

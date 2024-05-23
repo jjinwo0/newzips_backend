@@ -40,16 +40,15 @@ public class StoreService {
 //        loadDataFromMysqlToRedis();
     }
 
-    @PreDestroy
-    public void cleanUp() {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try (RedisConnection connection = connectionFactory.getConnection()) {
-                connection.flushDb();
-                System.out.println("레디스 데이터 초기화");
-            }
-
-        }));
-    }
+//    @PreDestroy
+//    public void cleanUp() {
+//        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+//            try (RedisConnection connection = connectionFactory.getConnection()) {
+//                connection.flushDb();
+//                System.out.println("레디스 데이터 초기화");
+//            }
+//        }));
+//    }
 
     /**
      * Redis에 상가 분석 데이터를 set을 활용해 저장
