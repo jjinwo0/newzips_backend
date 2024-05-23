@@ -5,16 +5,13 @@ import com.ssafy.happyhouse.request.AddressName;
 import com.ssafy.happyhouse.service.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("auction")
+@RequestMapping("/auction")
 @RequiredArgsConstructor
 public class AuctionController {
 
@@ -25,7 +22,12 @@ public class AuctionController {
 
         List<Auction> auctions = auctionService.getAuctionsByGuGunCode(addressName);
         return ResponseEntity.ok(auctions);
+    }
 
+    @GetMapping("/info/{id}")
+    public ResponseEntity<?> findAuctionInfo(@PathVariable Long id) {
+        Auction auction = auctionService.getAuctionById(id);
+        return ResponseEntity.ok(auction);
     }
 
 }

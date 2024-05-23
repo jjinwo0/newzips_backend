@@ -24,7 +24,10 @@ public class AuctionService {
         String gugunCode = dongCode.substring(0,5) + "00000";
 
         List<Auction> tmp = auctionMapper.getAuctionsByGuGunCode(gugunCode);
-        System.out.println(tmp.size());
         return tmp;
+    }
+
+    public Auction getAuctionById(Long id) {
+        return auctionMapper.getAuctionById(id);
     }
 }

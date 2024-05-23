@@ -117,18 +117,13 @@ public class BatchService {
     public void setAuctionInfo() {
 
         List<Auction> auctions =  mapper.getAuctionInfo();
-        List<Auction> auctionstmp =  new ArrayList<>();
-        auctionstmp.add(auctions.get(0));
-        auctionstmp.add(auctions.get(1));
-        auctionstmp.add(auctions.get(2));
-        auctionstmp.add(auctions.get(3));
         List<Auction> insertAuctions = new ArrayList<>();
 
-        String clientId = ""; // 네이버 클라우드 플랫폼에서 발급받은 Client ID
-        String clientSecret = ""; // 네이버 클라우드 플랫폼에서 발급받은 Client Secret
+        String clientId = "gksinmkzt9"; // 네이버 클라우드 플랫폼에서 발급받은 Client ID
+        String clientSecret = "9AxOiZX3Fj564Ofemm5Z0eOkhtuOPuJZSd3kcQfQ"; // 네이버 클라우드 플랫폼에서 발급받은 Client Secret
         try {
 
-            for(Auction auction : auctionstmp) {
+            for(Auction auction : auctions) {
 
                 String address = auction.getLocation();
                 String encodedAddress = URLEncoder.encode(address, "UTF-8");

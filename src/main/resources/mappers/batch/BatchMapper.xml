@@ -35,17 +35,19 @@
          WHERE lng IS NULL
     </select>
 
-    <update id="updateAuctionInfo">
-        <foreach collection="list" item="auction" separator=";">
-            UPDATE auctions
-            <set>
-                <if test="auction.sido != null">sido = #{auction.sido},</if>
-                <if test="auction.gugun != null">gugun = #{auction.gugun},</if>
-                <if test="auction.dong != null">dong = #{auction.dong},</if>
-                <if test="auction.lng != null">lng = #{auction.lng},</if>
-                <if test="auction.lat != null">lat = #{auction.lat}</if>
-            </set>
-            WHERE id = #{auction.id}
+    <update id="updateAuctionInfo" parameterType="java.util.List">
+
+        <foreach collection="list" item="auction" separator="; ">
+            UPDATE
+            auctions
+            SET
+            sido = #{auction.sido}
+            , gugun = #{auction.gugun}
+            , dong = #{auction.dong}
+            , lng = #{auction.lng}
+            , lat = #{auction.lat}
+            WHERE
+            id = #{auction.id}
         </foreach>
     </update>
 
