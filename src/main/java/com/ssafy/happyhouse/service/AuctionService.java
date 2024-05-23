@@ -18,10 +18,13 @@ public class AuctionService {
 
     private final AuctionMapper auctionMapper;
 
-    public List<Auction> getAuctionsByDongCode(AddressName addressName) {
+    public List<Auction> getAuctionsByGuGunCode(AddressName addressName) {
 
         String dongCode = storeMapper.findDongCodeByDongName(addressName);
+        String gugunCode = dongCode.substring(0,5) + "00000";
 
-        return auctionMapper.getAuctionsByDongCode(dongCode);
+        List<Auction> tmp = auctionMapper.getAuctionsByGuGunCode(gugunCode);
+        System.out.println(tmp.size());
+        return tmp;
     }
 }

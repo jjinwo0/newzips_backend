@@ -8,5 +8,5 @@ import java.util.List;
 @Mapper
 public interface AuctionMapper {
 
-    List<Auction> getAuctionsByDongCode(String dongCode);
+    List<Auction> getAuctionsByGuGunCode(String gugunCode);
 }

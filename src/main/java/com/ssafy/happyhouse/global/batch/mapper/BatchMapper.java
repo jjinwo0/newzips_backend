@@ -26,5 +26,5 @@ public interface BatchMapper {
     List<Auction> getAuctionInfo();
 
     // 주소, 위도, 경도 업데이트
-    void updateAuctionInfo(Auction auction);
+    void updateAuctionInfo(List<Auction> insertAuctions);
 }

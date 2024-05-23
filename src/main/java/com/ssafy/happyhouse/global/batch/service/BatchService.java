@@ -33,6 +33,7 @@ public class BatchService {
     private final NewsCrawling newsCrawling;
     private final AuctionCrawling auctionCrawling;
     private final GoogleMail googleMail;
+    private final BatchMapper batchMapper;
 
     /**
      * 당일 부동산 관련 상위 5개의 뉴스를 크롤링한다.
@@ -59,14 +60,18 @@ public class BatchService {
             List<Auction> auctionList = new ArrayList<>();
             String[] courtArr = {"서울중앙지방법원", "서울동부지방법원", "서울서부지방법원", "서울남부지방법원", "서울북부지방법원",
                     "의정부지방법원", "고양지원","남양주지원", "인천지방법원", "부천지원", "수원지방법원", "성남지원", "여주지원",
-                    "평택지원", "안산지원", "안양지원", "춘천지방법원", "강릉지원", "원주지원", "속초지원", "영월지원", "청주지방법원",
+                    "평택지원", "안산지원", "안양지원", "춘천지방법원", "강릉지원", "원주지원", "속초지원", "영월지원", "청주지방법원"
+            };
+
+            String[] courtArr2 = {
                     "충주지원", "제천지원", "영동지원", "대전지방법원", "홍성지원", "논산지원","천안지원","공주지원","서산지원","대구지방법원",
                     "안동지원","경주지원","김천지원","상주지원","의성지원","영덕지원","포항지원","대구서부지원","부산지방법원","부산동부지원",
                     "부산서부지원","울산지방법원","창원지방법원", "마산지원","진주지원","통영지원","밀양지원","거창지원","광주지방법원","목포지원",
                     "장흥지원","순천지원","해남지원","전주지방법원","군산지원","정읍지원","남원지원","제주지방법원"
             };
 
-            for(String court : courtArr) {
+
+            for(String court : courtArr2) {
                 log.info("=========================== 크롤링 지방법웝 " + court);
                 auctionList.addAll(auctionCrawling.getAuctionInfo(court));
             }
@@ -112,12 +117,18 @@ public class BatchService {
     public void setAuctionInfo() {
 
         List<Auction> auctions =  mapper.getAuctionInfo();
+        List<Auction> auctionstmp =  new ArrayList<>();
+        auctionstmp.add(auctions.get(0));
+        auctionstmp.add(auctions.get(1));
+        auctionstmp.add(auctions.get(2));
+        auctionstmp.add(auctions.get(3));
+        List<Auction> insertAuctions = new ArrayList<>();
 
         String clientId = ""; // 네이버 클라우드 플랫폼에서 발급받은 Client ID
         String clientSecret = ""; // 네이버 클라우드 플랫폼에서 발급받은 Client Secret
         try {
 
-            for(Auction auction : auctions) {
+            for(Auction auction : auctionstmp) {
 
                 String address = auction.getLocation();
                 String encodedAddress = URLEncoder.encode(address, "UTF-8");
@@ -181,10 +192,12 @@ public class BatchService {
                     auction.setDong(dongmyun);
                 }
                 if(auction.getLng() != null && auction.getLat() != null && auction.getSido() != null && auction.getGugun() != null && auction.getDong() != null ) {
-                    mapper.updateAuctionInfo(auction);
+                    insertAuctions.add(auction);
                 }
 
             }
+
+            batchMapper.updateAuctionInfo(insertAuctions);
 
 
 

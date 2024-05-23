@@ -41,7 +41,7 @@ public class BatchController {
         log.info("====================== 부동산 경매 정보 크롤링 완료");
     }
 
-    //@Scheduled(fixedDelay = 50000)
+    @Scheduled(fixedDelay = 50000)
     public void setAuctionInfo() throws Exception {
         batchService.setAuctionInfo();
     }

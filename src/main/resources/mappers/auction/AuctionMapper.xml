@@ -3,7 +3,7 @@
 
 <mapper namespace="com.ssafy.happyhouse.mapper.AuctionMapper">
 
-    <select id="getAuctionsByDongCode" resultType="com.ssafy.happyhouse.entity.auction.Auction">
+    <select id="getAuctionsByGuGunCode" resultType="com.ssafy.happyhouse.entity.auction.Auction">
         SELECT court,
                productUsage,
                location,
@@ -14,6 +14,6 @@
                lng,
                lat
           FROM auctions
-         WHERE dongCode = #{dongCode}
+         WHERE CONCAT(SUBSTRING(dongCode, 1, 5), '00000') = #{gugunCode}
     </select>
 </mapper>

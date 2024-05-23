@@ -36,17 +36,17 @@
     </select>
 
     <update id="updateAuctionInfo">
-
-        UPDATE auctions
-        <set>
-            <if test="sido != null">sido = #{sido},</if>
-            <if test="gugun != null">gugun = #{gugun},</if>
-            <if test="dong != null">dong = #{dong},</if>
-            <if test="lng != null">lng = #{lng},</if>
-            <if test="lat != null">lat = #{lat}</if>
-        </set>
-        WHERE id = #{id}
-
+        <foreach collection="list" item="auction" separator=";">
+            UPDATE auctions
+            <set>
+                <if test="auction.sido != null">sido = #{auction.sido},</if>
+                <if test="auction.gugun != null">gugun = #{auction.gugun},</if>
+                <if test="auction.dong != null">dong = #{auction.dong},</if>
+                <if test="auction.lng != null">lng = #{auction.lng},</if>
+                <if test="auction.lat != null">lat = #{auction.lat}</if>
+            </set>
+            WHERE id = #{auction.id}
+        </foreach>
     </update>
 
 

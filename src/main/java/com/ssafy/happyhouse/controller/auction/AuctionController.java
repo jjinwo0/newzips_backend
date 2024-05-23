@@ -23,7 +23,7 @@ public class AuctionController {
     @GetMapping("/list")
     public ResponseEntity<?> findAuctionsByDongCode(@ModelAttribute AddressName addressName) {
 
-        List<Auction> auctions = auctionService.getAuctionsByDongCode(addressName);
+        List<Auction> auctions = auctionService.getAuctionsByGuGunCode(addressName);
         return ResponseEntity.ok(auctions);
 
     }

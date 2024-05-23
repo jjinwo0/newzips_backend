@@ -125,4 +125,9 @@ CREATE TABLE `newsletter` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+UPDATE auctions
+    JOIN dongCode ON auctions.gugun = dongCode.gugunName AND auctions.dong = dongCode.dongName
+    SET auctions.dongCode = dongCode.dongCode
+WHERE auctions.dong IS NOT NULL AND auctions.gugun IS NOT NULL;
 
