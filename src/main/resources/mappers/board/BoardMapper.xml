@@ -12,7 +12,7 @@
 
     <select id="findAll" resultType="board">
         <![CDATA[
-        SELECT * FROM SSAFYHOME.BOARD
+        SELECT * FROM SSAFYHOME.BOARD ORDER BY createdAt DESC
         ]]>
     </select>
 
